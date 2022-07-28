@@ -10,10 +10,15 @@ class Seat extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'isLocked',
         'vehicle_id',
     ];
     public function detailOrders()
     {
         return $this->hasMany(DetailOrder::class);
+    }
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
     }
 }

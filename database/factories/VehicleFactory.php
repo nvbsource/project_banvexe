@@ -20,7 +20,7 @@ class VehicleFactory extends Factory
     {
         $arrayCountSeatLimousine = array(22, 32, 34);
         $arrayCountSeatNormal = array(40, 41, 42, 44);
-        $rangeOfVehicle = fake()->numberBetween(1, 5);
+        $rangeOfVehicle = fake()->numberBetween(1, RangeOfVehicle::get()->count());
         if (RangeOfVehicle::find($rangeOfVehicle)->type === "Limousine") {
             $countSeat = $arrayCountSeatLimousine[array_rand($arrayCountSeatLimousine)];
         } else {
@@ -31,6 +31,9 @@ class VehicleFactory extends Factory
             'name' => PassengerCarCompany::find($passengerCarCompany)->name,
             'licensePlates' => fake()->numerify("##-##-#####"),
             'countSeat' => $countSeat,
+            'countFloor' => 2,
+            'numColumn' => 7,
+            'numRow' => 5,
             'rangeOfVehicle_id' => $rangeOfVehicle,
             'passenger_car_company_id' => $passengerCarCompany
         ];

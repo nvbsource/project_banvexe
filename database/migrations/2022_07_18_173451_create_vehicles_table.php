@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('licensePlates');
             $table->integer('countSeat');
+            $table->integer('countFloor');
+            $table->integer('numColumn');
+            $table->integer('numRow');
             $table->unsignedBigInteger('rangeOfVehicle_id');
             $table->unsignedBigInteger('passenger_car_company_id');
             $table->foreign("rangeOfVehicle_id")->references("id")->on("range_of_vehicles");

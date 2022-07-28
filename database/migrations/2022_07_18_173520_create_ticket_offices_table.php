@@ -18,8 +18,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->string('longitude');
-            $table->string('latitude');
             $table->string('phone_official');
             $table->string('phone_reserved');
             $table->unsignedBigInteger('passenger_car_company_id');

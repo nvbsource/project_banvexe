@@ -22,9 +22,9 @@ class PassengerCarCompany extends Model
     {
         return $this->hasMany(TicketOffice::class);
     }
-    public function accountTicketOffices()
+    public function accounts()
     {
-        return $this->hasMany(AccountsTicketOffice::class);
+        return $this->hasMany(Account::class);
     }
     public function accountCompanies()
     {
@@ -34,7 +34,15 @@ class PassengerCarCompany extends Model
     {
         return $this->hasMany(Driver::class);
     }
+    public function assustantDrivers()
+    {
+        return $this->hasMany(AssistantDriver::class);
+    }
     public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+    public function routes()
     {
         return $this->hasMany(Vehicle::class);
     }

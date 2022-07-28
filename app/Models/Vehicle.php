@@ -12,9 +12,16 @@ class Vehicle extends Model
         'name',
         'licensePlates',
         'countSeat',
+        'countFloor',
+        'numColumn',
+        'numRow',
         'rangeOfVehicle_id',
         'passenger_car_company_id',
     ];
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
     public function pictures()
     {
         return $this->hasMany(PicturesVehicle::class);

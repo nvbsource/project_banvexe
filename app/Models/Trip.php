@@ -9,34 +9,31 @@ class Trip extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'from_district_id',
-        'to_district_id',
-        'address_start',
-        'address_end',
         'start_date',
+        'end_date',
         'status',
         'price',
-        'driver_id',
+        'route_id',
         'vehicle_id'
     ];
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
+    public function drivers()
+    {
+        return $this->hasMany(DriversDetail::class);
+    }
+    public function assitantDrivers()
+    {
+        return $this->hasMany(AssistantDriver::class);
+    }
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
     }
-    public function driver()
+    public function route()
     {
-        return $this->belongsTo(Driver::class, 'driver_id', 'id');
-    }
-    public function fromDistrict()
-    {
-        return $this->belongsTo(District::class, 'from_district_id', 'id');
-    }
-    public function toDistrict()
-    {
-        return $this->belongsTo(District::class, 'to_district_id', 'id');
+        return $this->belongsTo(Route::class, 'route_id', 'id');
     }
 }

@@ -1,27 +1,25 @@
 @extends("admin.layout.index")
 @section("toolbar")
-<div data-kt-swapper="true" data-kt-swapper-mode="prepend"
-    data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-    class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Danh sách các chuyến xe
-        <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
-        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-            <li class="breadcrumb-item text-muted">
-                <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">Administrator</a>
-            </li>
-            <li class="breadcrumb-item">
-                <span class="bullet bg-gray-200 w-5px h-2px"></span>
-            </li>
-            <li class="breadcrumb-item text-muted">Trip</li>
-            <li class="breadcrumb-item">
-                <span class="bullet bg-gray-200 w-5px h-2px"></span>
-            </li>
-            <li class="breadcrumb-item text-dark">List</li>
-        </ul>
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Account
+                Settings</h1>
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <li class="breadcrumb-item text-muted">
+                    <a href="/metronic8/demo1/../demo1/index.html" class="text-muted text-hover-primary">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <li class="breadcrumb-item text-muted">Account</li>
+            </ul>
+        </div>
+
+    </div>
 </div>
 @endsection
 @section("content")
-<!--begin::Card-->
 <div class="card">
     <div class="card-header border-0 pt-6">
         <div class="card-title">
@@ -112,16 +110,15 @@
                                 </svg>
                             </span>
                         </a>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"
-                                        data-kt-customer-table-filter="delete_row">Delete</a>
-                                </div>
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                            data-kt-menu="true">
+                            <div class="menu-item px-3">
+                                <a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
                             </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -131,6 +128,6 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{asset('administrator/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('administrator/assets/app/js/tableList/tableList.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{asset('admin/assets/app/js/tableList/tableList.js')}}"></script>
 @endsection

@@ -10,7 +10,8 @@ class DetailOrder extends Model
     use HasFactory;
     protected $fillable = [
         'order_id',
-        'seat_id'
+        'seat_id',
+        'status',
     ];
     public function order()
     {

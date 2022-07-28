@@ -15,19 +15,14 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("from_district_id");
-            $table->unsignedBigInteger("to_district_id");
-            $table->string("address_start");
-            $table->string("address_end");
-            $table->timestamp("start_date");
+            $table->string("start_date");
+            $table->string("end_date");
+            $table->string("price");
             $table->enum("status", ["pending", "active", "runing", "completed"])->default("pending");
-            $table->integer("price");
-            $table->unsignedBigInteger("driver_id");
+            $table->unsignedBigInteger("route_id");
             $table->unsignedBigInteger("vehicle_id");
-            $table->foreign("from_district_id")->references("id")->on("districts");
-            $table->foreign("to_district_id")->references("id")->on("districts");
-            $table->foreign("driver_id")->references("id")->on("drivers");
             $table->foreign("vehicle_id")->references("id")->on("vehicles");
+            $table->foreign("route_id")->references("id")->on("routes");
             $table->timestamps();
         });
     }

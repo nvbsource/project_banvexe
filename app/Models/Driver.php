@@ -18,9 +18,9 @@ class Driver extends Model
         'path_avatar',
         'passenger_car_company_id',
     ];
-    public function trips()
+    public function driverDetails()
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasMany(DriversDetail::class);
     }
     public function passengerCarCompany()
     {

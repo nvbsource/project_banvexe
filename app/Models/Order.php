@@ -13,9 +13,11 @@ class Order extends Model
         'isPayment',
         'isTicketReceived',
         'price',
-        'discount',
+        'discount_code_id',
         'ticketPickUpTime',
         'ticketOffice_id',
+        'departure_same_way_route_id',
+        'destination_same_way_route_id',
         'trip_id',
         'customer_id',
     ];
@@ -23,12 +25,24 @@ class Order extends Model
     {
         return $this->belongsTo(Trip::class, 'trip_id', 'id');
     }
+    public function departureSameWayRoute()
+    {
+        return $this->belongsTo(SameWayRoutes::class, 'departure_same_way_route_id', 'id');
+    }
+    public function destinationSameWayRoute()
+    {
+        return $this->belongsTo(SameWayRoutes::class, 'destination_same_way_route_id', 'id');
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-    public function details()
+    public function detailsOrders()
     {
         return $this->hasMany(DetailOrder::class);
+    }
+    public function discount()
+    {
+        return $this->belongsTo(DiscountCode::class, "discount_code_id", "id");
     }
 }

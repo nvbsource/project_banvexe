@@ -1,0 +1,26 @@
+.place {
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
+.place > span {
+    font-size: 12px;
+    font-weight: normal;
+}
+.duration {
+    font-size: 12px;
+    margin: 0 10px;
+}
+.slice-text {
+    width: 160px;
+    color: rgb(72, 72, 72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#map {
+    height: 400px;
+    width: 100%;
+}

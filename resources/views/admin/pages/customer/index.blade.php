@@ -1,23 +1,22 @@
 @extends("admin.layout.index")
 @section("toolbar")
-<div data-kt-swapper="true" data-kt-swapper-mode="prepend"
-    data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-    class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Danh sách các chuyến xe
-        <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
-        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-            <li class="breadcrumb-item text-muted">
-                <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">Administrator</a>
-            </li>
-            <li class="breadcrumb-item">
-                <span class="bullet bg-gray-200 w-5px h-2px"></span>
-            </li>
-            <li class="breadcrumb-item text-muted">Customer</li>
-            <li class="breadcrumb-item">
-                <span class="bullet bg-gray-200 w-5px h-2px"></span>
-            </li>
-            <li class="breadcrumb-item text-dark">List</li>
-        </ul>
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Account
+                Settings</h1>
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <li class="breadcrumb-item text-muted">
+                    <a href="/metronic8/demo1/../demo1/index.html" class="text-muted text-hover-primary">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                </li>
+                <li class="breadcrumb-item text-muted">Account</li>
+            </ul>
+        </div>
+
+    </div>
 </div>
 @endsection
 @section("content")
@@ -40,7 +39,7 @@
         </div>
         <div class="card-toolbar">
             <div class="d-flex justify-content-end">
-                <a href="{{route('createPassengerCarCompany')}}" class="btn btn-primary">Thêm doanh nghiệp</a>
+                <a href="" class="btn btn-primary">Thêm doanh nghiệp</a>
             </div>
         </div>
     </div>
@@ -109,6 +108,6 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{asset('administrator/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('administrator/assets/app/js/tableList/tableList.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{asset('admin/assets/app/js/tableList/tableList.js')}}"></script>
 @endsection

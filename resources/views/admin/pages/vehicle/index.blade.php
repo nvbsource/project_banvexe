@@ -7,7 +7,7 @@
         <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">Administrator</a>
+                <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">admin</a>
             </li>
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-200 w-5px h-2px"></span>
@@ -99,6 +99,6 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{asset('administrator/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('administrator/assets/app/js/tableList/tableList.js')}}"></script>
+<script src="{{asset('admin/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{asset('admin/assets/app/js/tableList/tableList.js')}}"></script>
 @endsection

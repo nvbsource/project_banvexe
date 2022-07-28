@@ -11,8 +11,6 @@ class TicketOffice extends Model
     protected $fillable = [
         'name',
         'address',
-        'longitude',
-        'latitude',
         'phone_official',
         'phone_reserved',
         'passenger_car_company_id'
@@ -20,5 +18,9 @@ class TicketOffice extends Model
     public function passengerCarCompany()
     {
         return $this->belongsTo(PassengerCarCompany::class, 'passenger_car_company_id', 'id');
+    }
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
     }
 }
