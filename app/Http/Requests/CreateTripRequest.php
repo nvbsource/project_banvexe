@@ -24,32 +24,28 @@ class CreateTripRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_district_id' => 'required',
-            'to_district_id' => 'required',
-            'address_start' => 'required',
-            'address_end' => 'required',
-            'start_date' => 'required',
-            'price' => 'required|numeric|gt:0',
-            'driver_id' => 'required',
-            'vehicle_id' => 'required',
+            'start_date'    => 'required|date',
+            'end_date'      => 'required|date|after_or_equal:start_date',
             'status' => 'in:active,pending,completed,runing',
+            'price' => 'required|numeric|gt:0',
+            'route_id' => 'required',
+            'vehicle_id' => 'required',
 
         ];
     }
     public function messages()
     {
         return [
-            "from_district_id.required" => "Vui lòng chọn thành phố đi",
-            "to_district_id.required" => "Vui lòng chọn thành phố đến",
-            "address_start.required" => "Vui lòng chọn bến xe đi",
-            "address_end.required" => "Vui lòng chọn bến xe đến",
             "start_date.required" => "Vui lòng nhập ngày khởi hành",
+            "start_date.date" => "Ngày khởi hành phải lớn hơn ngày hiện tại",
+            "end_date.required" => "Vui lòng nhập thời gian kết thúc",
+            "end_date.date" => "Thời gian kết thúc phải lớn hơn ngày khởi hành",
             "price.required" => "Vui lòng nhập giá",
             "price.numeric" => "Giá tiền phải là số",
             "price.gt" => "Giá tiền phải lớn hơn 0",
-            "driver_id.required" => "Vui lòng chọn tài xế",
-            "vehicle_id.required" => "Vui lòng chọn xe khách",
             "status.in" => "status không hợp lệ (active, pending, completed, runing)",
+            "route_id.required" => "Vui lòng chọn tuyến đường",
+            "vehicle_id.required" => "Vui lòng chọn xe khách",
         ];
     }
 }

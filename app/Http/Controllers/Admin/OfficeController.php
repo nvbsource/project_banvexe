@@ -37,7 +37,12 @@ class OfficeController extends Controller
     public function create(TicketOfficeRequest $request)
     {
         $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        $office = TicketOffice::create(array_merge($request->all(), ["passenger_car_company_id" => $passengerCarCompany]));
+        $office = TicketOffice::create(array_merge(
+            $request->all(),
+            [
+                "passenger_car_company_id" => $passengerCarCompany
+            ]
+        ));
 
         return response()->json([
             "message" => "Thêm văn phòng thành công",
@@ -52,14 +57,26 @@ class OfficeController extends Controller
     {
         $ticketOffice = TicketOffice::find($id);
         if (!$ticketOffice) {
-            return response()->json(["message" => "Không tìm thấy văn phòng có id " . $id], 404);
+            return response()->json([
+                "message" => "Không tìm thấy văn phòng có id " . $id
+            ], 404);
+        }
+        if ($ticketOffice->accounts->count() > 0) {
+            return response()->json([
+                "message" => "Không thể xoá văn phòng khi đã có nhân viên"
+            ], 422);
         }
         $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
         if ($ticketOffice->passengerCarCompany->id !== $passengerCarCompany) {
-            return response()->json(["message" => "Bạn không có quyền chỉnh sửa dữ liệu này"], 401);
+            return response()->json([
+                "message" => "Bạn không có quyền chỉnh sửa dữ liệu này"
+            ], 401);
         }
         $ticketOffice->delete();
-        return response()->json(["message" => "Xoá dữ liệu thành công", "data" => $ticketOffice]);
+        return response()->json([
+            "message" => "Xoá văn phòng thành công",
+            "data" => $ticketOffice
+        ]);
     }
 
 

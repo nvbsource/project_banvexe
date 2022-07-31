@@ -1,5 +1,5 @@
 .place {
-    width: 160px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -20,7 +20,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#map {
+#map,
+#map_departure,
+#map_destination {
     height: 400px;
     width: 100%;
+}
+.pac-container {
+    z-index: 9999;
 }

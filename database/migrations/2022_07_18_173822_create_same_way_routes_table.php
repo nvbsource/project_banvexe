@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('longlitude');
             $table->string('latilute');
+            $table->unsignedBigInteger('district_id');
             $table->unsignedBigInteger('route_id');
+            $table->foreign("district_id")->references("id")->on("districts");
             $table->foreign("route_id")->references("id")->on("routes");
             $table->timestamps();
         });

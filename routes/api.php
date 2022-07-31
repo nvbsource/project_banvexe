@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\OfficeController;
+use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Api\TripApiController;
 use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
@@ -37,9 +38,16 @@ Route::group(["prefix" => "passengerCarCompany"], function () {
 });
 
 Route::group(['prefix' => 'office', 'middleware' => 'authAdmin'], function () {
-    Route::post('/', [OfficeController::class, 'create'])->name("handleAddOffice");
-    Route::post('/{id}/staff', [AccountController::class, 'addStaff'])->name("handleAddStaff");
-    Route::delete('/{id}/staff', [AccountController::class, 'detroyStaff'])->name("handleDeleteStaff");
-    Route::delete('/{id}', [OfficeController::class, 'detroy'])->name("handleDeleteOffice");
-    Route::put('/{id}', [OfficeController::class, 'update'])->name("handleUpdateOffice");
+    Route::post('/', [OfficeController::class, 'create']);
+    Route::post('/{id}/staff', [AccountController::class, 'addStaff']);
+    Route::delete('/{id}', [OfficeController::class, 'detroy']);
+    Route::put('/{id}', [OfficeController::class, 'update']);
+});
+
+Route::group(['prefix' => 'staff', 'middleware' => 'authAdmin'], function () {
+    Route::put('/{id}', [AccountController::class, 'editStaff']);
+    Route::delete('/{id}', [AccountController::class, 'detroyStaff']);
+});
+Route::group(['prefix' => 'route', 'route' => 'authAdmin'], function () {
+    Route::post('/', [RouteController::class, 'create']);
 });

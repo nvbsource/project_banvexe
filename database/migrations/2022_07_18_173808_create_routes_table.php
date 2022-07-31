@@ -15,18 +15,18 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('departure_province_id');
-            $table->unsignedBigInteger('destination_province_id');
+            $table->unsignedBigInteger('departure_district_id');
+            $table->unsignedBigInteger('destination_district_id');
             $table->string('departure_name');
             $table->string('destination_name');
-            $table->string('departure_longlitude');
-            $table->string('departure_latitude');
-            $table->string('destination_longlitude');
-            $table->string('destination_latitude');
-            $table->unsignedBigInteger('passengerCarCompany_id');
-            $table->foreign("departure_province_id")->references("id")->on("provinces");
-            $table->foreign("destination_province_id")->references("id")->on("provinces");
-            $table->foreign("passengerCarCompany_id")->references("id")->on("passenger_car_companies");
+            $table->string('departure_address');
+            $table->string('destination_address');
+            $table->string('departure_location')->comment("longlitude, latitude")->nullable();
+            $table->string('destination_location')->comment("longlitude, latitude")->nullable();
+            $table->unsignedBigInteger('passenger_car_company_id');
+            $table->foreign("departure_district_id")->references("id")->on("districts");
+            $table->foreign("destination_district_id")->references("id")->on("districts");
+            $table->foreign("passenger_car_company_id")->references("id")->on("passenger_car_companies");
             $table->timestamps();
         });
     }

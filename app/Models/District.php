@@ -20,4 +20,16 @@ class District extends Model
     {
         return $this->hasMany(Trip::class);
     }
+    public function departureRoutes()
+    {
+        return $this->hasMany(Route::class);
+    }
+    public function destinationRoutes()
+    {
+        return $this->hasMany(Route::class);
+    }
+    public function sameWayRoutes()
+    {
+        return $this->hasMany(SameWayRoutes::class);
+    }
 }

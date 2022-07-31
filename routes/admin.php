@@ -9,15 +9,16 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\OfficeController;
 
+Route::post('login', [AdminController::class, 'handleLogin'])->name("handleAdminLogin");
+
 Route::group(['middleware' => ['guest:admin']], function () {
     Route::get('login', [AdminController::class, 'login'])->name("adminLogin");
 });
 
-Route::post('login', [AdminController::class, 'handleLogin'])->name("handleAdminLogin");
-Route::get('logout', [AdminController::class, 'hangleLogout'])->name("hangleAdminLogout");
 
 Route::group(['middleware' => ['authAdmin']], function () {
 
+    Route::get('logout', [AdminController::class, 'hangleLogout'])->name("hangleAdminLogout");
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
 
     Route::group(['prefix' => 'office'], function () {
@@ -30,7 +31,7 @@ Route::group(['middleware' => ['authAdmin']], function () {
     });
 
     Route::group(['prefix' => 'trip'], function () {
-        Route::get('/', [TripController::class, 'viewList'])->name("listTrips");
+        Route::get('/', [TripController::class, 'viewList'])->name("listTrip");
         Route::get('/create', [TripController::class, 'viewCreate'])->name("createTrip");
     });
 

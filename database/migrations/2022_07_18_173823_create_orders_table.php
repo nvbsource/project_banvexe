@@ -16,16 +16,15 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string("paymentMethod", 50);
+            $table->enum("paymentMethod", ["COD", "MOMO", "VNPAY"])->default("COD");
             $table->boolean("isPayment")->default(false);
             $table->boolean("isTicketReceived")->default(false);
             $table->integer("price");
-            $table->unsignedBigInteger("discount_code_id");
-            $table->date("ticketPickUpLocation");
+            $table->unsignedBigInteger("discount_code_id")->nullable();
+            $table->timestamp("ticketPickUpLocation");
             $table->unsignedBigInteger("ticketOffice_id")->nullable();
             $table->unsignedBigInteger("trip_id");
             $table->unsignedBigInteger("customer_id");
-            $table->unsignedBigInteger("seat_id");
             $table->unsignedBigInteger("departure_same_way_route_id")->nullable();
             $table->unsignedBigInteger("destination_same_way_route_id")->nullable();
             $table->foreign('ticketOffice_id')->references('id')->on("ticket_offices");
@@ -34,7 +33,6 @@ return new class extends Migration
             $table->foreign('destination_same_way_route_id')->references('id')->on("same_way_routes");
             $table->foreign('trip_id')->references('id')->on("trips");
             $table->foreign('customer_id')->references('id')->on("customers");
-            $table->foreign('seat_id')->references('id')->on("seats");
             $table->timestamps();
         });
     }

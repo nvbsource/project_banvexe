@@ -15,12 +15,4 @@ class Province extends Model
     {
         return $this->hasMany(District::class);
     }
-    public function departureRoutes()
-    {
-        return $this->hasMany(Routes::class);
-    }
-    public function destinationRoutes()
-    {
-        return $this->hasMany(Routes::class);
-    }
 }

@@ -53,17 +53,10 @@ var KTOfficeDetail = function () {
                             }
                         }
                     },
-                    password: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Vui lòng nhập mật khẩu'
-                            }
-                        }
-                    },
                     email: {
                         validators: {
                             notEmpty: {
-                                message: 'Vui lòng nhập địa chỉ email nhận tài khoản'
+                                message: 'Vui lòng nhập địa chỉ email'
                             }
                         }
                     },
@@ -97,13 +90,15 @@ var KTOfficeDetail = function () {
                         submitEditStaffButton.disabled = true;
                         $.ajax({
                             method: "PUT",
-                            url: `/office/${$(formStaff.querySelector("[name='id']")).val()}/staff`,
+                            url: `/staff/${$(formEditStaff.querySelector("[name='id']")).val()}`,
                             data: {
-                                name: $(formStaff.querySelector("[name='name']")).val(),
-                                username: $(formStaff.querySelector("[name='username']")).val(),
-                                password: $(formStaff.querySelector("[name='password']")).val(),
-                                email: $(formStaff.querySelector("[name='email']")).val(),
-                                role: $(formStaff.querySelector("[name='role']")).val(),
+                                name: $(formEditStaff.querySelector("[name='name']")).val(),
+                                username: $(formEditStaff.querySelector("[name='username']")).val(),
+                                password: $(formEditStaff.querySelector("[name='password']")).val(),
+                                email: $(formEditStaff.querySelector("[name='email']")).val(),
+                                role: $(formEditStaff.querySelector("[name='role']")).val(),
+                                passenger_car_company_id: 10,
+                                ticket_office_id: 20,
                             },
                             success: (success) => {
                                 toastr.success(success.message, "Thành công", {
@@ -161,6 +156,7 @@ var KTOfficeDetail = function () {
     const handleEditStaff = (e) => {
         const staff = JSON.parse(e.target.dataset.staff);
         $(formEditStaff.querySelector("#name")).html(staff.name);
+        $(formEditStaff.querySelector("[name='id']")).val(staff.id);
         $(formEditStaff.querySelector("[name='name']")).val(staff.name);
         $(formEditStaff.querySelector("[name='username']")).val(staff.username);
         $(formEditStaff.querySelector("[name='email']")).val(staff.email);
@@ -225,12 +221,12 @@ var KTOfficeDetail = function () {
                         submitOfficeButton.disabled = true;
                         $.ajax({
                             method: "PUT",
-                            url: `/office/${$(form.querySelector("[name='id']")).val()}`,
+                            url: `/office/${$(formOffice.querySelector("[name='id']")).val()}`,
                             data: {
-                                name: $(form.querySelector("[name='name']")).val(),
-                                address: $(form.querySelector("[name='address']")).val(),
-                                phone_official: $(form.querySelector("[name='phone_official']")).val(),
-                                phone_reserved: $(form.querySelector("[name='phone_reserved']")).val()
+                                name: $(formOffice.querySelector("[name='name']")).val(),
+                                address: $(formOffice.querySelector("[name='address']")).val(),
+                                phone_official: $(formOffice.querySelector("[name='phone_official']")).val(),
+                                phone_reserved: $(formOffice.querySelector("[name='phone_reserved']")).val()
                             },
                             success: (success) => {
                                 toastr.success(success.message, "Thành công", {
@@ -315,7 +311,7 @@ var KTOfficeDetail = function () {
                     email: {
                         validators: {
                             notEmpty: {
-                                message: 'Vui lòng nhập địa chỉ email nhận tài khoản'
+                                message: 'Vui lòng nhập địa chỉ email'
                             }
                         }
                     },
@@ -414,7 +410,7 @@ var KTOfficeDetail = function () {
         const id = e.target.dataset.id;
         $.ajax({
             method: "DELETE",
-            url: `/office/${id}/staff`,
+            url: `/staff/${id}`,
             success: (success) => {
                 toastr.success(success.message, "Thành công", {
                     timeOut: 1000,
