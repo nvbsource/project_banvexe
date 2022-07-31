@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\OfficeController;
 
-Route::post('login', [AdminController::class, 'handleLogin'])->name("handleAdminLogin");
+Route::post('login', [AdminController::class, 'handleLogin'])->name("handleAdminLoginád");
 
 Route::group(['middleware' => ['guest:admin']], function () {
     Route::get('login', [AdminController::class, 'login'])->name("adminLogin");
