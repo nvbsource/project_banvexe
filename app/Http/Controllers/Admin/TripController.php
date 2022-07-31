@@ -50,6 +50,8 @@ class TripController extends Controller
         //     ], 404);
         // }
 
+        //
+
         $trip = Trip::create($data);
 
         $assistantDrivers = AssistantDriversDetail::createMany(array_map(function ($item)  use ($trip) {
