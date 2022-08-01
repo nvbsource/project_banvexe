@@ -106,7 +106,7 @@ class PaymentController extends Controller
 
             $orderId = $order->id; // Mã đơn hàng
             $requestId = time() . "";
-            $requestType = "payWithATM";
+            $requestType = "captureWallet";
             //before sign HMAC SHA256 signature
             $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
             $signature = hash_hmac("sha256", $rawHash, $serectkey);

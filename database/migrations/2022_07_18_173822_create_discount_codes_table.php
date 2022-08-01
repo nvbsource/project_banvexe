@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('discount_codes', function (Blueprint $table) {
             $table->id();
+            $table->string("code");
+            $table->float("price");
+            $table->timestamp("start_date");
+            $table->timestamp("end_date");
+            $table->boolean("status")->comment("true: was used, false: not used")->default(false);
+            $table->unsignedBigInteger("order_id")->nullable();
+            $table->unsignedBigInteger("passenger_car_company_id")->nullable();
+            $table->foreign("order_id")->references("id")->on("orders");
+            $table->foreign("passenger_car_company_id")->references("id")->on("passgener_car_companies");
             $table->timestamps();
         });
     }

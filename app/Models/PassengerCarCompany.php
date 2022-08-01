@@ -46,4 +46,8 @@ class PassengerCarCompany extends Model
     {
         return $this->hasMany(Vehicle::class);
     }
+    public function discounts()
+    {
+        return $this->hasMany(DiscountCode::class);
+    }
 }
