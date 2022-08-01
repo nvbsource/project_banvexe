@@ -14,19 +14,19 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Role::class::factory()->create([
+        \App\Models\Role::factory()->create([
             "role" => "mananger",
             "name" => "Quản lý công ty"
         ]);
-        \App\Models\Role::class::factory()->create([
+        \App\Models\Role::factory()->create([
             "role" => "ticket",
             "name" => "Nhân viên bán vé"
         ]);
-        \App\Models\Role::class::factory()->create([
+        \App\Models\Role::factory()->create([
             "role" => "bus",
             "name" => "Nhân viên điều hành xe"
         ]);
-        \App\Models\Role::class::factory()->create([
+        \App\Models\Role::factory()->create([
             "role" => "contact",
             "name" => "Nhân viên chăm sóc khách hàng"
         ]);

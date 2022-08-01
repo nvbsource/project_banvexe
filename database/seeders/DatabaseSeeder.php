@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             TicketOfficeSeeder::class,
             AccountSeeder::class,
+            RouteSeeder::class,
+            TripSeeder::class,
         ]);
     }
 }

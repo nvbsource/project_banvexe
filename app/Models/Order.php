@@ -13,7 +13,7 @@ class Order extends Model
         'isPayment',
         'isTicketReceived',
         'price',
-        'discount_code_id',
+        'discount',
         'ticketPickUpTime',
         'ticketOffice_id',
         'departure_same_way_route_id',
@@ -40,9 +40,5 @@ class Order extends Model
     public function detailsOrders()
     {
         return $this->hasMany(DetailOrder::class);
-    }
-    public function discount()
-    {
-        return $this->belongsTo(DiscountCode::class, "discount_code_id", "id");
     }
 }

@@ -2,20 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Role;
+use App\Models\Trip;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Trip>
  */
-class RoleFactory extends Factory
+class TripFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    protected $model = Role::class;
+    protected $model = Trip::class;
     public function definition()
     {
         return [

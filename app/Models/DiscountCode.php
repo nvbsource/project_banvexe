@@ -13,7 +13,6 @@ class DiscountCode extends Model
         "price",
         "start_date",
         "end_date",
-        "status",
         "order_id",
         "passenger_car_company_id",
     ];
