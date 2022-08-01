@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Requests\AddRouteRequest;
 use App\Models\District;
@@ -15,7 +15,7 @@ class RouteController extends Controller
         $passengerCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
         $routes = Route::where("passenger_car_company_id",  $passengerCompany)->orderByDesc("id")->get();
         $districts = District::all();
-        return view('admin.pages.route.index', compact('routes', 'districts'));
+        return view('manager.pages.route.index', compact('routes', 'districts'));
     }
     public function create(AddRouteRequest $request)
     {

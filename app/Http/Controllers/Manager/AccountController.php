@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Requests\AddStaffRequest;
 use App\Http\Requests\EditStaffRequest;

@@ -1,4 +1,4 @@
-@extends("admin.layout.index")
+@extends("manager.layout.index")
 @section("toolbar")
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
     <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
@@ -7,7 +7,7 @@
                 phòng - {{$office->name}}</h1>
             <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                 <li class="breadcrumb-item text-muted">
-                    <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">Home</a>
+                    <a href="{{route('manager.dashboard')}}" class="text-muted text-hover-primary">Home</a>
                 </li>
                 <li class="breadcrumb-item">
                     <span class="bullet bg-gray-400 w-5px h-2px"></span>

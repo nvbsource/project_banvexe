@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Requests\CreateTripRequest;
 use App\Models\AssistantDriver;
@@ -17,7 +17,7 @@ class TripController extends Controller
     public function viewList()
     {
         $trips = Trip::all();
-        return view('admin.pages.trip.index', compact('trips'));
+        return view('manager.pages.trip.index', compact('trips'));
     }
     public function viewCreate()
     {
@@ -25,7 +25,7 @@ class TripController extends Controller
         $assistantDrivers = AssistantDriver::all();
         $vehicles = Vehicle::all();
         $routes = Route::all();
-        return view('admin.pages.trip.createTrip', compact('drivers', 'assistantDrivers', 'vehicles', 'routes'));
+        return view('manager.pages.trip.createTrip', compact('drivers', 'assistantDrivers', 'vehicles', 'routes'));
     }
     public function handleCreate(CreateTripRequest $request)
     {

@@ -1,6 +1,6 @@
 <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-        <a href="{{route('dashboard')}}">
+        <a href="{{route('manager.dashboard')}}">
             <img alt="Logo" src="{{asset('admin/assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default">
             <img alt="Logo" src="{{asset('admin/assets/media/logos/default-small.svg')}}" class="h-20px app-sidebar-logo-minimize">
         </a>
@@ -16,7 +16,7 @@
     <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true" style="height: 356px;">
             <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('admin/dashboard*') ? 'show' : ''}}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('manager/dashboard*') ? 'show' : ''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -33,7 +33,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/dashboard*') ? 'active' : ''}}" href="{{route('dashboard')}}">
+                            <a class="menu-link {{Request::is('manager/dashboard*') ? 'active' : ''}}" href="{{route('manager.dashboard')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -47,7 +47,7 @@
                         <span class="menu-heading fw-bold text-uppercase fs-7">Quản lý</span>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('admin/route*') ? 'show' : ''}}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('manager/route*') ? 'show' : ''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -62,7 +62,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/route') ? 'active' : ''}}" href="{{route('listRoute')}}">
+                            <a class="menu-link {{Request::is('manager/route') ? 'active' : ''}}" href="{{route('manager.listRoute')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('admin/office*') ? 'show' : ''}}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('manager/office*') ? 'show' : ''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -86,7 +86,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/office') ? 'active' : ''}}" href="{{route('listOffice')}}">
+                            <a class="menu-link {{Request::is('manager/office') ? 'active' : ''}}" href="{{route('manager.listOffice')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('admin/vehicle*') ? 'show' : ''}}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('manager/vehicle*') ? 'show' : ''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -110,7 +110,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/vehicle') ? 'active' : ''}}" href="{{route('listVehicle')}}">
+                            <a class="menu-link {{Request::is('manager/vehicle') ? 'active' : ''}}" href="{{route('manager.listVehicle')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('admin/trip*') ? 'show' : ''}}">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::is('manager/trip*') ? 'show' : ''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -134,7 +134,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/trip') ? 'active' : ''}}" href="{{route('listTrip')}}">
+                            <a class="menu-link {{Request::is('manager/trip') ? 'active' : ''}}" href="{{route('manager.listTrip')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -142,7 +142,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{Request::is('admin/trip/create') ? 'active' : ''}}" href="{{route('createTrip')}}">
+                            <a class="menu-link {{Request::is('manager/trip/create') ? 'active' : ''}}" href="{{route('manager.createTrip')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

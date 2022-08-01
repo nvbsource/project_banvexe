@@ -19,7 +19,7 @@ class AccountSeeder extends Seeder
             'name' => "Nguyễn Văn Bảo",
             'username' => "admin",
             'password' => '$2a$12$lj7idpHXqdMqLPFGFt5SauRoOCKAK8.MleN5FyfWt2WNI4csv4kBW',
-            'role' => 'mananger',
+            'role' => 'manager',
             'passenger_car_company_id' => 1,
             'ticket_office_id' => null,
             'remember_token' => Str::random(10),

@@ -1,4 +1,4 @@
-@extends("admin.layout.index")
+@extends("manager.layout.index")
 @section("toolbar")
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
     <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">

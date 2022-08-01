@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="{{route('dashboard')}}" class="d-lg-none">
+            <a href="{{route('manager.dashboard')}}" class="d-lg-none">
                 <img alt="Logo" src="{{asset('admin/assets/media/logos/default-small.svg')}}" class="h-30px">
             </a>
         </div>
@@ -292,7 +292,7 @@
                         </div>
                         <div class="separator my-2"></div>
                         <div class="menu-item px-5">
-                            <a href="{{route('hangleAdminLogout')}}"
+                            <a href="{{route('handleAdminLogout')}}"
                                 class="menu-link px-5">Sign Out</a>
                         </div>
                     </div>

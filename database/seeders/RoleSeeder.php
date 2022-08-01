@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         \App\Models\Role::factory()->create([
-            "role" => "mananger",
+            "role" => "manager",
             "name" => "Quản lý công ty"
         ]);
         \App\Models\Role::factory()->create([

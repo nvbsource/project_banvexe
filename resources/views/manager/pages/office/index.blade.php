@@ -1,17 +1,18 @@
-@extends("admin.layout.index")
+@extends("manager.layout.index")
 @section("toolbar")
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
     <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
         <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Quản lý xe khách</h1>
+            <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Quản lý văn
+                phòng</h1>
             <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                 <li class="breadcrumb-item text-muted">
-                    <a href="{{route('dashboard')}}" class="text-muted text-hover-primary">Home</a>
+                    <a href="{{route('manager.dashboard')}}" class="text-muted text-hover-primary">Home</a>
                 </li>
                 <li class="breadcrumb-item">
                     <span class="bullet bg-gray-400 w-5px h-2px"></span>
                 </li>
-                <li class="breadcrumb-item text-muted">vehicle</li>
+                <li class="breadcrumb-item text-muted">office</li>
             </ul>
         </div>
     </div>
@@ -21,9 +22,9 @@
 <div class="card mb-5 mb-xl-8">
     <div class="card-header border-0 pt-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold fs-3 mb-1">Danh sách xe khách</span>
+            <span class="card-label fw-bold fs-3 mb-1">Văn phòng</span>
             <span class="text-muted mt-1 fw-semibold fs-7">Hiện tại công ty đang có <span
-                    class="badge badge-light-success fs-7 fw-bold">{{$vehicles->count()}}</span> xe khách</span>
+                    class="badge badge-light-success fs-7 fw-bold">{{$offices->count()}}</span> văn phòng</span>
         </h3>
         <div class="card-toolbar">
             <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
@@ -35,7 +36,7 @@
                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect>
                     </svg>
                 </span>
-                Thêm xe khách</a>
+                Thêm văn phòng</a>
         </div>
     </div>
     <div class="card-body py-3">
@@ -48,29 +49,38 @@
                                 data-kt-check-target="#table_office .form-check-input" value="1" />
                         </div>
                     </th>
-                    <th class="min-w-125px">Tên xe khách</th>
-                    <th class="min-w-125px">Biển số xe</th>
-                    <th class="min-w-125px">Số ghế</th>
-                    <th class="min-w-125px">Loại xe</th>
-                    <th class="min-w-125px">Nhà xe</th>
-                    <th class="min-w-125px">Số chuyến</th>
+                    <th class="min-w-125px">Tên văn phòng</th>
+                    <th class="min-w-125px">Địa chỉ</th>
+                    <th class="min-w-125px">Số điện thoại</th>
+                    <th class="min-w-125px">Số lượng nhân viên</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 fw-semibold">
-                @foreach ($vehicles as $vehicle)
+                @foreach($offices as $item)
                 <tr>
                     <td>
                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                             <input class="form-check-input" type="checkbox" value="1" />
                         </div>
                     </td>
-                    <td>{{$vehicle->name}}</td>
-                    <td>{{$vehicle->licensePlates}}</td>
-                    <td>{{$vehicle->countSeat}}</td>
-                    <td>{{$vehicle->rangeOfVehicle->type}}</td>
-                    <td>{{$vehicle->passengerCarCompany->name}}</td>
-                    <td>10</td>
+                    <td>
+                        {{$item->name}}
+                    </td>
+                    <td>{{$item->address}}</td>
+                    <td class="d-flex flex-column gap-2">
+                        <span class="badge badge-light fw-bold">
+                            <i class="bi bi-telephone me-3"></i>
+                            {{$item->phone_official}}
+                        </span>
+                        <span class="badge badge-light fw-bold">
+                            <i class="bi bi-telephone me-3"></i>
+                            {{$item->phone_reserved}}
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-light-primary fw-bold">{{$item->accounts->count()}}</span>
+                    </td>
                     <td class="text-end">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click"
                             data-kt-menu-placement="bottom-end">Actions
@@ -86,11 +96,11 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                             data-kt-menu="true">
                             <div class="menu-item px-3">
-                                <a href="#"
+                                <a href="{{route('manager.viewOffice', $item->id)}}"
                                     class="menu-link px-3">Xem và cập nhật</a>
                             </div>
                             <div class="menu-item px-3">
-                                <span data-id="#" class="menu-link px-3" id="office_delete">Delete</span>
+                                <span data-id="{{$item->id}}" class="menu-link px-3" id="office_delete">Delete</span>
                             </div>
                         </div>
                     </td>

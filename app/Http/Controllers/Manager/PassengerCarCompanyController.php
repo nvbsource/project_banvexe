@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Models\PassengerCarCompany;
 
@@ -9,10 +9,10 @@ class PassengerCarCompanyController extends Controller
     public function viewList()
     {
         $listCompany = PassengerCarCompany::all();
-        return view("admin.pages.passengerCarCompany.index", compact('listCompany'));
+        return view("manager.pages.passengerCarCompany.index", compact('listCompany'));
     }
     public function viewCreate()
     {
-        return view("admin.pages.passengerCarCompany.createPassengerCarCompany");
+        return view("manager.pages.passengerCarCompany.createPassengerCarCompany");
     }
 }

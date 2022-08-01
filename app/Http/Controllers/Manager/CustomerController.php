@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Models\Customer;
 
@@ -9,6 +9,6 @@ class CustomerController extends Controller
     public function viewList()
     {
         $customers = Customer::all();
-        return view('admin.pages.customer.index', compact('customers'));
+        return view('manager.pages.customer.index', compact('customers'));
     }
 }

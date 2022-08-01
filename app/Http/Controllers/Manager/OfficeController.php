@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Requests\AddStaffRequest;
 use App\Http\Requests\TicketOfficeRequest;
@@ -18,7 +18,7 @@ class OfficeController extends Controller
     {
         $passengerCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
         $offices = TicketOffice::where("passenger_car_company_id",  $passengerCompany)->orderByDesc("id")->get();
-        return view('admin.pages.office.index', compact('offices'));
+        return view('manager.pages.office.index', compact('offices'));
     }
     public function viewDetail($id)
     {
@@ -32,7 +32,7 @@ class OfficeController extends Controller
             "passenger_car_company_id" => $passengerCompany
         ])->orderByDesc("id")->get();
         $roles = Role::all();
-        return view('admin.pages.office.detail', compact('staffs', 'office', 'roles'));
+        return view('manager.pages.office.detail', compact('staffs', 'office', 'roles'));
     }
     public function create(TicketOfficeRequest $request)
     {
