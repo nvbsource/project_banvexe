@@ -10,10 +10,12 @@ use App\Models\Trip;
 use App\Models\Vehicle;
 use App\Models\AssistantDriversDetail;
 use App\Models\DriversDetail;
+use App\Traits\FunctionTrait;
 use Illuminate\Support\Facades\Auth;
 
 class TripController extends Controller
 {
+    use FunctionTrait;
     public function viewList()
     {
         $trips = Trip::all();
@@ -32,9 +34,9 @@ class TripController extends Controller
         $data = $request->all();
         $listAssistantDrivers = $data['assistantDrivers'];
         $listDrivers = $data['drivers'];
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
+        $companyId = $this->getCompanyAccountLogin()->id;
         $vehicle = Vehicle::find($data["vehicle_id"]);
-        if ($vehicle->passengerCarCompany->id !== $passengerCarCompany) {
+        if ($vehicle->passengerCarCompany->id !== $companyId) {
             return response()->json([
                 "message" => "Xe khách không tồn tại trong công ty",
             ], 404);

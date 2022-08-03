@@ -6,25 +6,27 @@ use App\Http\Requests\AddRouteRequest;
 use App\Models\District;
 use Illuminate\Http\Request;
 use App\Models\Route;
+use App\Traits\FunctionTrait;
 use Illuminate\Support\Facades\Auth;
 
 class RouteController extends Controller
 {
+    use FunctionTrait;
     public function viewList()
     {
-        $passengerCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        $routes = Route::where("passenger_car_company_id",  $passengerCompany)->orderByDesc("id")->get();
+        $companyId = $this->getCompanyAccountLogin()->id;
+        $routes = Route::where("passenger_car_company_id",  $companyId)->orderByDesc("id")->get();
         $districts = District::all();
         return view('manager.pages.route.index', compact('routes', 'districts'));
     }
     public function create(AddRouteRequest $request)
     {
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
+        $companyId = $this->getCompanyAccountLogin()->id;
         $request = $request->all();
         $checkExistRoute = Route::where([
             "departure_district_id" => $request["departure_district_id"],
             "destination_district_id" => $request["destination_district_id"],
-            "passenger_car_company_id" => $passengerCarCompany
+            "passenger_car_company_id" => $companyId
         ])->first();
 
         if ($checkExistRoute) {
@@ -36,7 +38,7 @@ class RouteController extends Controller
         $route = Route::create(array_merge(
             $request,
             [
-                "passenger_car_company_id" => $passengerCarCompany
+                "passenger_car_company_id" => $companyId
             ]
         ));
 

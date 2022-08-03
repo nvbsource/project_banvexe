@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\OfficeController;
-use App\Http\Controllers\Admin\RouteController;
+use App\Http\Controllers\Manager\AccountController;
+use App\Http\Controllers\Manager\OfficeController;
+use App\Http\Controllers\Manager\RouteController;
 use App\Http\Controllers\Api\TripApiController;
 use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassengerCarCompanyApiController;
+use App\Http\Controllers\Manager\VehicleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,15 +39,26 @@ Route::group(["prefix" => "passengerCarCompany"], function () {
 
 Route::group(['prefix' => 'office', 'middleware' => 'authAdmin'], function () {
     Route::post('/', [OfficeController::class, 'create']);
-    Route::post('/{id}/staff', [AccountController::class, 'addStaff']);
     Route::delete('/{id}', [OfficeController::class, 'detroy']);
     Route::put('/{id}', [OfficeController::class, 'update']);
+
+    Route::post('/{id}/staff', [AccountController::class, 'create']);
 });
 
 Route::group(['prefix' => 'staff', 'middleware' => 'authAdmin'], function () {
-    Route::put('/{id}', [AccountController::class, 'editStaff']);
-    Route::delete('/{id}', [AccountController::class, 'detroyStaff']);
+    Route::put('/{id}', [AccountController::class, 'update']);
+    Route::delete('/{id}', [AccountController::class, 'detroy']);
 });
+
 Route::group(['prefix' => 'route', 'route' => 'authAdmin'], function () {
     Route::post('/', [RouteController::class, 'create']);
+});
+
+
+Route::group(['prefix' => 'vehicle', 'middleware' => 'authAdmin'], function () {
+    Route::post('/', [VehicleController::class, 'create']);
+    Route::delete('/{id}', [VehicleController::class, 'detroy']);
+    Route::put('/{id}', [VehicleController::class, 'update']);
+    Route::post('/{id}/picture', [VehicleController::class, 'uploadImage']);
+    Route::delete('/picture/{id}', [VehicleController::class, 'deleteImage']);
 });

@@ -2,45 +2,46 @@
 
 namespace App\Http\Controllers\Manager;
 
-use App\Http\Requests\AddStaffRequest;
 use App\Http\Requests\TicketOfficeRequest;
-use App\Mail\NotifyMail;
 use App\Models\Account;
 use App\Models\Role;
 use App\Models\TicketOffice;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use App\Traits\FunctionTrait;
+
 
 class OfficeController extends Controller
 {
+    use FunctionTrait;
     public function viewList()
     {
-        $passengerCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        $offices = TicketOffice::where("passenger_car_company_id",  $passengerCompany)->orderByDesc("id")->get();
+        $companyId = $this->getCompanyAccountLogin()->id;
+        $offices = TicketOffice::where("passenger_car_company_id",  $companyId)->orderByDesc("id")->get();
         return view('manager.pages.office.index', compact('offices'));
     }
     public function viewDetail($id)
     {
-        $passengerCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        $office = TicketOffice::find($id);
+        $companyId = $this->getCompanyAccountLogin()->id;
+        $office = TicketOffice::where([
+            "id" => $id,
+            "passenger_car_company_id" => $companyId
+        ])->first();
         if (!$office) {
             abort(404);
         }
         $staffs = Account::where([
             "ticket_office_id" => $id,
-            "passenger_car_company_id" => $passengerCompany
+            "passenger_car_company_id" => $companyId
         ])->orderByDesc("id")->get();
         $roles = Role::all();
         return view('manager.pages.office.detail', compact('staffs', 'office', 'roles'));
     }
     public function create(TicketOfficeRequest $request)
     {
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
+        $companyId = $this->getCompanyAccountLogin()->id;
         $office = TicketOffice::create(array_merge(
             $request->all(),
             [
-                "passenger_car_company_id" => $passengerCarCompany
+                "passenger_car_company_id" => $companyId
             ]
         ));
 
@@ -66,8 +67,8 @@ class OfficeController extends Controller
                 "message" => "Không thể xoá văn phòng khi đã có nhân viên"
             ], 422);
         }
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        if ($ticketOffice->passengerCarCompany->id !== $passengerCarCompany) {
+        $companyId = $this->getCompanyAccountLogin()->id;
+        if ($ticketOffice->passengerCarCompany->id !== $companyId) {
             return response()->json([
                 "message" => "Bạn không có quyền chỉnh sửa dữ liệu này"
             ], 401);
@@ -86,8 +87,8 @@ class OfficeController extends Controller
         if (!$ticketOffice) {
             return response()->json(["message" => "Không tìm thấy văn phòng có id " . $id], 404);
         }
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        if ($ticketOffice->passengerCarCompany->id !== $passengerCarCompany) {
+        $companyId = $this->getCompanyAccountLogin()->id;
+        if ($ticketOffice->passengerCarCompany->id !== $companyId) {
             return response()->json(["message" => "Bạn không có quyền chỉnh sửa dữ liệu này"], 401);
         }
         $ticketOffice->update($request->all());

@@ -26,8 +26,7 @@
                     class="badge badge-light-success fs-7 fw-bold">{{$vehicles->count()}}</span> xe khách</span>
         </h3>
         <div class="card-toolbar">
-            <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
-                data-bs-target="#form_add_office_modal">
+            <a href="{{route('manager.createVehicle')}}" class="btn btn-sm btn-light-primary">
                 <span class="svg-icon svg-icon-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
@@ -70,7 +69,7 @@
                     <td>{{$vehicle->countSeat}}</td>
                     <td>{{$vehicle->rangeOfVehicle->type}}</td>
                     <td>{{$vehicle->passengerCarCompany->name}}</td>
-                    <td>10</td>
+                    <td>{{$vehicle->trips->count()}}</td>
                     <td class="text-end">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click"
                             data-kt-menu-placement="bottom-end">Actions
@@ -86,7 +85,11 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                             data-kt-menu="true">
                             <div class="menu-item px-3">
-                                <a href="#"
+                                <a href="{{route("manager.uploadImageVehicle", $vehicle->id)}}"
+                                    class="menu-link px-3">Quản lý hình ảnh</a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="{{route("manager.detailVehicle", $vehicle->id)}}"
                                     class="menu-link px-3">Xem và cập nhật</a>
                             </div>
                             <div class="menu-item px-3">

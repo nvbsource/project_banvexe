@@ -7,13 +7,15 @@ use App\Http\Requests\EditStaffRequest;
 use App\Mail\AddStaffMail;
 use App\Models\TicketOffice;
 use App\Models\Account;
+use App\Traits\FunctionTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class AccountController extends Controller
 {
-    public function addStaff(AddStaffRequest $request, $id)
+    use FunctionTrait;
+    public function create(AddStaffRequest $request, $id)
     {
         $ticketOffice = TicketOffice::find($id);
         $request = $request->all();
@@ -26,8 +28,8 @@ class AccountController extends Controller
             ], 404);
         }
 
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        if ($ticketOffice->passengerCarCompany->id !== $passengerCarCompany) {
+        $companyId = $this->getCompanyAccountLogin()->id;
+        if ($ticketOffice->passengerCarCompany->id !== $companyId) {
             return response()->json([
                 "message" => "Bạn không có quyền thao tác liệu này"
             ], 401);
@@ -36,7 +38,7 @@ class AccountController extends Controller
         $staff = Account::create(array_merge(
             $request,
             [
-                "passenger_car_company_id" => $passengerCarCompany,
+                "passenger_car_company_id" => $companyId,
                 "ticket_office_id" => $id
             ]
         ));
@@ -57,14 +59,14 @@ class AccountController extends Controller
             "data" => $staff
         ]);
     }
-    public function detroyStaff($id)
+    public function detroy($id)
     {
         $staff = Account::find($id);
         if (!$staff) {
             return response()->json(["message" => "Không tìm thấy nhân viên có id " . $id], 404);
         }
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
-        if ($staff->passengerCarCompany->id !== $passengerCarCompany) {
+        $companyId = $this->getCompanyAccountLogin()->id;
+        if ($staff->passengerCarCompany->id !== $companyId) {
             return response()->json([
                 "message" => "Bạn không có quyền thao tác liệu này"
             ], 401);
@@ -72,11 +74,11 @@ class AccountController extends Controller
         $staff->delete();
         return response()->json(["message" => "Xoá dữ liệu thành công", "data" => $staff]);
     }
-    public function editStaff(EditStaffRequest $request, $id)
+    public function update(EditStaffRequest $request, $id)
     {
         $request = $request->all();
         $staff = Account::find($id);
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
+        $companyId = $this->getCompanyAccountLogin()->id;
 
         if (!$staff) {
             return response()->json([
@@ -84,7 +86,7 @@ class AccountController extends Controller
             ], 404);
         }
 
-        if ($staff->passengerCarCompany->id !== $passengerCarCompany) {
+        if ($staff->passengerCarCompany->id !== $companyId) {
             return response()->json([
                 "message" => "Bạn không có quyền thao tác liệu này"
             ], 401);

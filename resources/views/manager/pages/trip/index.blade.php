@@ -26,7 +26,7 @@
                     class="badge badge-light-success fs-7 fw-bold">{{$trips->count()}}</span></span>
         </h3>
         <div class="card-toolbar">
-            <a href="{{route('createTrip')}}" class="btn btn-sm btn-light-primary">
+            <a href="{{route('manager.createTrip')}}" class="btn btn-sm btn-light-primary">
                 <span class="svg-icon svg-icon-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
