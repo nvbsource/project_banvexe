@@ -80,3 +80,33 @@
     width: 30px;
     font-size: 1rem;
 }
+.seat-item{
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.seat-action{
+    position: absolute;
+    bottom: 16.25px;
+    left: 16.25px;
+}
+.seat-action-item{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.information-item:nth-child(1){
+    flex:2;
+}
+.information-item:nth-child(2){
+    flex:3;
+}
+.information-item:nth-child(3){
+    flex:1;
+}
+ .seat-item-blocking{
+    background-color: #d37165;
+}
+.seat-item-blocking .seat-action-item{
+    border-color: white !important;
+}

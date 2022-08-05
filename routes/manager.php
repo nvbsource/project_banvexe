@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Manager\OrderController;
 use App\Http\Controllers\Manager\CustomerController;
 use App\Http\Controllers\Manager\TripController;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +35,9 @@ Route::group(['middleware' => ['authAdmin', 'accountAccess:manager'], "as" => "m
         Route::get('/', [VehicleController::class, 'viewList'])->name("listVehicle");
         Route::get('/create', [VehicleController::class, 'viewCreate'])->name("createVehicle");
         Route::get('/{id}', [VehicleController::class, 'detail'])->name("detailVehicle");
+    });
+
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('/booking', [OrderController::class, 'viewBooking'])->name("bookingTicket");
     });
 });
