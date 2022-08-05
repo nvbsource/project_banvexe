@@ -161,7 +161,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item seat-item-blocking border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-infor">
@@ -184,7 +184,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -200,7 +200,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -208,7 +208,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -216,7 +216,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -224,7 +224,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -232,7 +232,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -240,7 +240,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -248,7 +248,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -256,7 +256,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -264,7 +264,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
@@ -272,7 +272,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-2 mb-2 px-1">
+            <div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1">
                 <div class="seat-item border border-2 h-200px h-xl-250px p-5">
                     <h2 class="seat-name">B1</h2>
                     <div class="seat-action">
