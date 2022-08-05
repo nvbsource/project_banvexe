@@ -3,6 +3,10 @@
 var KTUploadVehicle = function () {
     var deletes;
     const initUploadVehicle = function(){
+        setEventDelete();
+    }
+    const setEventDelete = () => {
+        deletes = document.querySelectorAll(".vehicle__image--icon");
         deletes.forEach(element => element.addEventListener("click", handleDelete));
     }
     const initDropzone = () => {
@@ -16,8 +20,21 @@ var KTUploadVehicle = function () {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             },
             success: (success) => {
-                toastr.success(JSON.parse(success.xhr.response).message, "Thành công", {
+                const data = JSON.parse(success.xhr.response);
+                toastr.success(data.message, "Thành công", {
                     timeOut: 1000,
+                    onHidden: () => {
+                        const div = document.createElement("div");
+                        div.classList = "col-12 col-sm-4 col-md-2 pb-7";
+                        div.innerHTML = `<div class="vehicle__image--item rounded-3 h-200px">
+                            <img src="/${data.data.path}" alt="" class="h-100">
+                            <div class="vehicle__image--overlay">
+                                <i class="bi bi-trash vehicle__image--icon" data-id="${data.data.id}"></i>
+                            </div>
+                        </div>`
+                        document.querySelector("#list-images").appendChild(div);
+                        setEventDelete();
+                    }
                 });
             },
             accept: (file, done)=>{
@@ -52,10 +69,8 @@ var KTUploadVehicle = function () {
                     success: (success) => {
                         toastr.success(success.message, "Thành công", {
                             timeOut: 1000,
-                            onHidden: function () {
-                                location.reload();
-                            }
                         });
+                        e.target.parentNode.parentNode.parentNode.remove()
                     },
                     error: (error) => {
                         toastr.error(error.responseJSON.message, "Thất bại");
@@ -77,7 +92,6 @@ var KTUploadVehicle = function () {
 
     return {
         init: function () {
-            deletes = document.querySelectorAll(".vehicle__image--icon");
             initUploadVehicle();
             initDropzone();
         }

@@ -34,6 +34,5 @@ Route::group(['middleware' => ['authAdmin', 'accountAccess:manager'], "as" => "m
         Route::get('/', [VehicleController::class, 'viewList'])->name("listVehicle");
         Route::get('/create', [VehicleController::class, 'viewCreate'])->name("createVehicle");
         Route::get('/{id}', [VehicleController::class, 'detail'])->name("detailVehicle");
-        Route::get('/{id}/upload', [VehicleController::class, 'viewUpload'])->name("uploadImageVehicle");
     });
 });

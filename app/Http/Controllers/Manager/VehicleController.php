@@ -6,6 +6,7 @@ use App\Http\Requests\CreateVehicleRequest;
 use App\Http\Requests\UploadImageVehicleRequest;
 use App\Models\PicturesVehicle;
 use App\Models\RangeOfVehicle;
+use App\Models\Seat;
 use App\Models\Vehicle;
 use App\Traits\FunctionTrait;
 use Illuminate\Support\Facades\Auth;
@@ -76,10 +77,34 @@ class VehicleController extends Controller
         ]);
     }
     public function create(CreateVehicleRequest $request){
-        $vehivle = Vehicle::create(array_merge($request->all(), ["passenger_car_company_id" => $this->getCompanyAccountLogin()->id]));
+        $vehicle = Vehicle::create(array_merge($request->all(), ["passenger_car_company_id" => $this->getCompanyAccountLogin()->id]));
+        for ($i = 1; $i <= $vehicle->countSeat; $i++) {
+            Seat::create([
+                'name' => "G" . $i,
+                'vehicle_id' => $vehicle->id
+            ]);
+        }
         return response()->json([
             "message" => "Thêm xe mới thành công",
-            "data" => $vehivle
+            "data" => $vehicle
+        ]);
+    }
+    public function update(CreateVehicleRequest $request, $id){
+        $vehicle = Vehicle::find($id);
+
+        if (!$vehicle) {
+            return response()->json(["message" => "Không tìm thấy văn phòng có id " . $id], 404);
+        }
+
+        $companyId = $this->getCompanyAccountLogin()->id;
+        if ($vehicle->passengerCarCompany->id !== $companyId) {
+            return response()->json(["message" => "Bạn không có quyền chỉnh sửa dữ liệu này"], 401);
+        }
+
+        $vehicle->update($request->all());
+        return response()->json([
+            "message" => "Chỉnh sửa thông tin xe khách thành công",
+            "data" => $vehicle
         ]);
     }
 }

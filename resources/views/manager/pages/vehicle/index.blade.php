@@ -38,21 +38,21 @@
         </div>
     </div>
     <div class="card-body py-3">
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_office">
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_vehicle">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                     <th class="w-10px pe-2">
                         <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                             <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                data-kt-check-target="#table_office .form-check-input" value="1" />
+                                data-kt-check-target="#table_vehicle .form-check-input" value="1" />
                         </div>
                     </th>
                     <th class="min-w-125px">Tên xe khách</th>
                     <th class="min-w-125px">Biển số xe</th>
-                    <th class="min-w-125px">Số ghế</th>
+                    <th class="min-w-125px text-center">Số ghế</th>
                     <th class="min-w-125px">Loại xe</th>
                     <th class="min-w-125px">Nhà xe</th>
-                    <th class="min-w-125px">Số chuyến</th>
+                    <th class="min-w-125px text-center">Số chuyến</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>
@@ -66,10 +66,20 @@
                     </td>
                     <td>{{$vehicle->name}}</td>
                     <td>{{$vehicle->licensePlates}}</td>
-                    <td>{{$vehicle->countSeat}}</td>
+                    <td class="text-center">
+                        <span class="label pulse pulse-success mr-10">
+                            <span class="position-relative">{{$vehicle->countSeat}}</span>
+                            <span class="pulse-ring"></span>
+                        </span>
+                    </td>
                     <td>{{$vehicle->rangeOfVehicle->type}}</td>
                     <td>{{$vehicle->passengerCarCompany->name}}</td>
-                    <td>{{$vehicle->trips->count()}}</td>
+                    <td class="text-center">
+                        <span class="label pulse pulse-success mr-10">
+                            <span class="position-relative">{{$vehicle->trips->count()}}</span>
+                            <span class="pulse-ring"></span>
+                        </span>
+                    </td>
                     <td class="text-end">
                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click"
                             data-kt-menu-placement="bottom-end">Actions
@@ -85,15 +95,8 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                             data-kt-menu="true">
                             <div class="menu-item px-3">
-                                <a href="{{route("manager.uploadImageVehicle", $vehicle->id)}}"
-                                    class="menu-link px-3">Quản lý hình ảnh</a>
-                            </div>
-                            <div class="menu-item px-3">
                                 <a href="{{route("manager.detailVehicle", $vehicle->id)}}"
                                     class="menu-link px-3">Xem và cập nhật</a>
-                            </div>
-                            <div class="menu-item px-3">
-                                <span data-id="#" class="menu-link px-3" id="office_delete">Delete</span>
                             </div>
                         </div>
                     </td>
@@ -103,92 +106,8 @@
         </table>
     </div>
 </div>
-<div class="modal fade" id="form_add_office_modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <div class="modal-content rounded">
-            <div class="modal-header pb-0 border-0 justify-content-end">
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                    <span class="svg-icon svg-icon-1">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                fill="currentColor"></rect>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                <form id="form_office" class="form fv-plugins-bootstrap5 fv-plugins-framework">
-                    <div class="mb-13 text-center">
-                        <h1 class="mb-3">Thêm văn phòng mới</h1>
-                    </div>
-                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span class="required">Tên văn phòng</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                aria-label="Specify a target name for future usage and reference"
-                                data-kt-initialized="1"></i>
-                        </label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Nhập tên văn phòng"
-                            name="name">
-                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span class="required">Địa chỉ</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                aria-label="Specify a target name for future usage and reference"
-                                data-kt-initialized="1"></i>
-                        </label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Nhập địa chỉ văn phòng"
-                            name="address">
-                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                    <span class="required">Số điện thoại chính</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                        aria-label="Specify a target name for future usage and reference"
-                                        data-kt-initialized="1"></i>
-                                </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Số điện thoại chính"
-                                    name="phone_official">
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                    <span class="required">Số điện thoại phụ</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                        aria-label="Specify a target name for future usage and reference"
-                                        data-kt-initialized="1"></i>
-                                </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Số điện thoại phụ"
-                                    name="phone_reserved">
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button type="reset" id="form_add_office_cancel" class="btn btn-light me-3">Cancel</button>
-                        <button type="submit" id="form_add_office_submit" class="btn btn-primary">
-                            <span class="indicator-label">Thêm mới</span>
-                            <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                    <div></div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 @section('scripts')
 <script src="{{asset('admin/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('admin/assets/app/js/Office/office.js')}}"></script>
+<script src="{{asset('admin/assets/app/js/Vehicle/vehicle.js')}}"></script>
 @endsection

@@ -1,11 +1,9 @@
 "use strict";
 
-var KTCreateVehicle = function () {
+var KTEditVehicle = function () {
     var form;
     var validator;
     var submitButton;
-    var initCreateVehicle = function () {
-    }
     var handleForm = function(){
         validator = FormValidation.formValidation(
             form,
@@ -87,15 +85,15 @@ var KTCreateVehicle = function () {
                         submitButton.setAttribute('data-kt-indicator', 'on');
                         submitButton.disabled = true;
                         $.ajax({
-                            method: "POST",
-                            url: "/vehicle",
+                            method: "PUT",
+                            url: `/vehicle/${$(form.querySelector("[name='id']")).val()}`,
                             data: {
                                 name: $(form.querySelector("[name='name']")).val(),
                                 licensePlates: $(form.querySelector("[name='licensePlates']")).val(),
                                 countSeat: $(form.querySelector("[name='countSeat']")).val(),
                                 countFloor: $(form.querySelector("[name='countFloor']")).val(),
-                                numColumn: $(form.querySelector("[name='countColumn']")).val(),
-                                numRow: $(form.querySelector("[name='countRow']")).val(),
+                                numColumn: $(form.querySelector("[name='numColumn']")).val(),
+                                numRow: $(form.querySelector("[name='numRow']")).val(),
                                 rangeOfVehicle_id: $(form.querySelector("[name='rangeOfVehicle']")).val(),
                             },
                             success: (success) => {
@@ -123,13 +121,14 @@ var KTCreateVehicle = function () {
     }
     return {
         init: function () {
-            form = document.querySelector('#form_create_vehicle');
-            submitButton = document.getElementById('form_create_vehicle_submit');
+            form = document.querySelector('#form_edit_vehicle');
+            submitButton = document.getElementById('form_edit_vehicle_submit');
+            $("[name='rangeOfVehicle']").select2("val", $("[name='rangeOfVehicle_id']").val());
             handleForm();
         }
     }
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTCreateVehicle.init();
+    KTEditVehicle.init();
 });

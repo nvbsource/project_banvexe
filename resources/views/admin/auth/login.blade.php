@@ -21,12 +21,8 @@
 					<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
 						<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{asset('admin/assets/media/auth/agency.png')}}" alt="" />
 						<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{asset('admin/assets/media/auth/agency-dark.png')}}" alt="" />
-						<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
-						<div class="text-gray-600 fs-base text-center fw-semibold">In this kind of post, 
-						<a href="#" class="opacity-75-hover text-primary me-1">the blogger</a>introduces a person they’ve interviewed 
-						<br />and provides some background information about 
-						<a href="#" class="opacity-75-hover text-primary me-1">the interviewee</a>and their 
-						<br />work following this is a transcript of the interview.</div>
+						<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Hệ thống quản lý nhà xe</h1>
+						<div class="text-gray-600 fs-base text-center fw-semibold">Ứng dụng quản lý nhà xe giúp các doanh nghiệp bán vé xe trực tuyến tại <a href="#" class="fw-bold fs-4">VexeGroup</a></div>
 					</div>
 				</div>
 				<div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
@@ -35,22 +31,17 @@
 							<form class="form w-100" novalidate="novalidate" action="{{route('handleAdminLogin')}}" method="POST">
 								@csrf
 								<div class="text-center mb-11">
-									<h1 class="text-dark fw-bolder mb-3">Sign In</h1>
-									<div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
+									<h1 class="text-dark fw-bolder mb-3">Đăng Nhập Hệ Thống</h1>
+									<div class="text-gray-500 fw-semibold fs-6">Sử dụng tài khoản của hệ thống để đăng nhập</div>
 								</div>
 								<div class="row g-3 mb-9">
-									<div class="col-md-6">
-										<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+									<div class="col-md-12">
+										<a href="{{route("adminLoginGoogle")}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 										<img alt="Logo" src="{{asset('admin/assets/media/svg/brand-logos/google-icon.svg')}}" class="h-15px me-3" />Sign in with Google</a>
-									</div>
-									<div class="col-md-6">
-										<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-										<img alt="Logo" src="{{asset('admin/assets/media/svg/brand-logos/apple-black.svg')}}" class="theme-light-show h-15px me-3" />
-										<img alt="Logo" src="{{asset('admin/assets/media/svg/brand-logos/apple-black-dark.svg')}}" class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
 									</div>
 								</div>
 								<div class="separator separator-content my-14">
-									<span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
+									<span class="w-125px text-gray-500 fw-semibold fs-7">Hoặc Email</span>
 								</div>
 								@if(Session::has('error'))
 									<div class="alert alert-danger">
@@ -65,15 +56,13 @@
 								</div>
 								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 									<div></div>
-									<a href="#" class="link-primary">Forgot Password ?</a>
+									<a href="#" class="link-primary">Quên mật khẩu</a>
 								</div>
 								<div class="d-grid mb-10">
 									<button type="submit" class="btn btn-primary">
-										<span class="indicator-label">Sign In</span>
+										<span class="indicator-label">Đăng Nhập</span>
 									</button>
 								</div>
-								<div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet? 
-								<a href="{{asset('/../demo1/authentication/layouts/overlay/sign-up.html')}}" class="link-primary">Sign up</a></div>
 							</form>
 						</div>
 					</div>

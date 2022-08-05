@@ -15,9 +15,9 @@ class SeatSeeder extends Seeder
     public function run()
     {
         foreach (Vehicle::get() as $vehicle) {
-            for ($i = 1; $i < $vehicle->countSeat; $i++) {
+            for ($i = 1; $i <= $vehicle->countSeat; $i++) {
                 \App\Models\Seat::factory()->create([
-                    'name' => "MS" . $i,
+                    'name' => "G" . $i,
                     'vehicle_id' => $vehicle->id
                 ]);
             }
