@@ -14,6 +14,6 @@ class AssistantDriverSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Models\AssistantDriver::factory(100)->create();
     }
 }

@@ -21,4 +21,8 @@ class Seat extends Model
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
     }
+    public function pauseSeatDetails()
+    {
+        return $this->hasMany(PauseDetailSeat::class);
+    }
 }

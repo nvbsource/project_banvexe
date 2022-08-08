@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_orders', function (Blueprint $table) {
+        Schema::create('pause_seats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('seat_id');
-            $table->boolean("status");
-            $table->foreign("order_id")->references('id')->on("orders");
-            $table->foreign("seat_id")->references('id')->on("seats");
+            $table->timestamp("pauseTime")->default(Carbon::now()->addMinute(10));
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_orders');
+        Schema::dropIfExists('pause_seats');
     }
 };

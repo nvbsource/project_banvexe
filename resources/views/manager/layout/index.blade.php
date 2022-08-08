@@ -27,6 +27,7 @@
 			<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
 				@include("manager.layout.sidebar")
 				<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+					<div class="loading-overlay" id="loading_overlay">
 					<div class="d-flex flex-column flex-column-fluid">
 						@yield("toolbar")
 						<div id="kt_app_content" class="app-content flex-column-fluid">
@@ -35,6 +36,10 @@
 							</div>
 						</div>
 					</div>
+					<div class="loading-body">
+						<div class="spinner spinner-white spinner-log"></div>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>

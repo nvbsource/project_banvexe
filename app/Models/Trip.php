@@ -14,7 +14,8 @@ class Trip extends Model
         'status',
         'price',
         'route_id',
-        'vehicle_id'
+        'vehicle_id',
+        'passenger_car_company_id'
     ];
     public function orders()
     {
@@ -26,7 +27,7 @@ class Trip extends Model
     }
     public function assitantDrivers()
     {
-        return $this->hasMany(AssistantDriver::class);
+        return $this->hasMany(AssistantDriversDetail::class);
     }
     public function vehicle()
     {
@@ -35,5 +36,9 @@ class Trip extends Model
     public function route()
     {
         return $this->belongsTo(Route::class, 'route_id', 'id');
+    }
+    public function passengerCarCompany()
+    {
+        return $this->belongsTo(PassengerCarCompany::class, 'passenger_car_company_id', 'id');
     }
 }

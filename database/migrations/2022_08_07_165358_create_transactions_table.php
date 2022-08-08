@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_orders', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('seat_id');
-            $table->boolean("status");
-            $table->foreign("order_id")->references('id')->on("orders");
-            $table->foreign("seat_id")->references('id')->on("seats");
+            $table->enum("methodPayment", ["MOMO", "VNPAY", "ZALOPAY"]);
+            $table->float("amountReceived");
+            $table->string("message");
+            $table->string("status");
+            $table->unsignedBigInteger("order_id");
+            $table->foreign("order_id")->references("id")->on("orders");
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_orders');
+        Schema::dropIfExists('transactions');
     }
 };

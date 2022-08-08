@@ -8,6 +8,8 @@ use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassengerCarCompanyApiController;
+use App\Http\Controllers\Manager\SeatController;
+use App\Http\Controllers\Manager\TripController;
 use App\Http\Controllers\Manager\VehicleController;
 
 /*
@@ -29,8 +31,9 @@ Route::group(["prefix" => "driver"], function () {
     Route::get('/getDriverByCompany/{company_id}', [DriverController::class, 'getDriverByCompany']);
 });
 
-Route::group(["prefix" => "trip"], function () {
-    Route::post('/', [TripApiController::class, 'create']);
+Route::group(['prefix' => 'trip', 'middleware' => 'authAdmin'], function () {
+    Route::get('/search', [TripController::class, 'search']);
+    Route::get('/{tripId}', [TripController::class, 'detail']);
 });
 
 Route::group(["prefix" => "passengerCarCompany"], function () {
@@ -52,6 +55,9 @@ Route::group(['prefix' => 'staff', 'middleware' => 'authAdmin'], function () {
 
 Route::group(['prefix' => 'route', 'route' => 'authAdmin'], function () {
     Route::post('/', [RouteController::class, 'create']);
+});
+Route::group(['prefix' => 'seat', 'route' => 'authAdmin'], function () {
+    Route::post('/blockseat', [SeatController::class, 'blockSeat']);
 });
 
 

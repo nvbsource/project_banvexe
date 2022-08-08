@@ -105,8 +105,34 @@
     flex: 2;
 }
 .seat-item-blocking {
-    background-color: #d37165;
+    background-color: #20c969;
 }
 .seat-item-blocking .seat-action-item {
+    border-color: white !important;
+}
+.flatpickr-calendar{
+    width: 315px !important;
+}
+.loading-overlay{
+    position: relative;
+}
+.loading-body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.loading-overlay.show .loading-body{
+    display: flex;
+}
+.time-item{
+    cursor: pointer;
+}
+#seat_item.select .seat-item{
     border-color: white !important;
 }

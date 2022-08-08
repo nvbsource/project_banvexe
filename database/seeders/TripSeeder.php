@@ -22,6 +22,7 @@ class TripSeeder extends Seeder
             "status" => "pending",
             "route_id" => fake()->numberBetween(1, Route::get()->count()),
             "vehicle_id" => 1,
+            "passenger_car_company_id" => 1,
         ]);
         \App\Models\Trip::factory()->create([
             "start_date" => now(),
@@ -30,6 +31,7 @@ class TripSeeder extends Seeder
             "status" => "pending",
             "route_id" => fake()->numberBetween(1, Route::get()->count()),
             "vehicle_id" => 2,
+            "passenger_car_company_id" => 1,
         ]);
         \App\Models\Trip::factory()->create([
             "start_date" => now(),
@@ -38,6 +40,7 @@ class TripSeeder extends Seeder
             "status" => "pending",
             "route_id" => fake()->numberBetween(1, Route::get()->count()),
             "vehicle_id" => 3,
+            "passenger_car_company_id" => 1,
         ]);
     }
 }
