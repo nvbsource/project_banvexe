@@ -35,5 +35,8 @@ class Account extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role', 'role');
     }
-    
+    public function pauseSeats()
+    {
+        return $this->hasMany(PauseSeat::class);
+    }
 }

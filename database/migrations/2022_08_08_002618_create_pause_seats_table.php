@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('pause_seats', function (Blueprint $table) {
             $table->id();
             $table->timestamp("pauseTime")->default(Carbon::now()->addMinute(10));
+            $table->unsignedBigInteger("account_id");
+            $table->foreign("account_id")->references("id")->on("accounts");
             $table->timestamps();
         });
     }

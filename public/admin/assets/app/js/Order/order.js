@@ -110,13 +110,11 @@ var KTOrder = (function () {
                 const contentHTML = success.data.seats
                     .map((item) => {
                         return `<div class="col-md-4 col-xl-3 col-xxl-2 mb-2 px-1" id="seat_item" data-id="${item.id}">
-                        <div class="seat-item ${
-                            item.information ? "seat-item-blocking" : ""
-                        } border border-2 h-200px h-xl-250px p-5">
+                        <div class="seat-item ${item.information ? "seat-item-blocking" : ""
+                            } border border-2 h-200px h-xl-250px p-5">
                             <h2 class="seat-name">${item.name}</h2>
-                            ${
-                                item.information
-                                    ? `<div class="seat-infor">
+                            ${item.information
+                                ? `<div class="seat-infor">
                                 <p class="fs-4">250.000vnđ</p>
                                 <p>${item.information.name} - ${item.information.phone}</p>
                             </div>
@@ -125,7 +123,7 @@ var KTOrder = (function () {
                                 <div class="seat-action-item border border-2 d-flex flex-center">M</div>
                                 <div class="seat-action-item border border-2 d-flex flex-center">X</div>
                             </div>`
-                                    : `<div class="seat-action">
+                                : `<div class="seat-action">
                                     <span id="book_seat" class="seat-action-item border border-2 d-flex flex-center text-white">B</span>
                                 </div>`
                             }
@@ -135,60 +133,51 @@ var KTOrder = (function () {
                     .join("");
                 const contentInformationTrip = `<div class="card mb-5">
                         <div class="information border rounded-2 p-4">
-                            <p class="information-route text-primary mb-2">Thuộc chuyến <b>${
-                                success.data.time_start
-                            }</b> ngày ${success.data.date_start} tuyến <b>${
-                    success.data.route
-                } (${success.data.total_trip_of_route})</b></p>
+                            <p class="information-route text-primary mb-2">Thuộc chuyến <b>${success.data.time_start
+                    }</b> ngày ${success.data.date_start} tuyến <b>${success.data.route
+                    } (${success.data.total_trip_of_route})</b></p>
                             <div class="information-content d-flex">
                                 <div class="information-item">
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Loại xe:</div>
-                                        <span class="information-value">${
-                                            success.data.rangeOfVehicle
-                                        } ${
-                    success.data.total_number_seats
-                } chổ</span>
+                                        <span class="information-value">${success.data.rangeOfVehicle
+                    } ${success.data.total_number_seats
+                    } chổ</span>
                                     </div>
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Số xe:</div>
-                                        <span class="information-value">${
-                                            success.data.licensePlates
-                                        }</span>
+                                        <span class="information-value">${success.data.licensePlates
+                    }</span>
                                     </div>
                                 </div>
                                 <div class="information-item">
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Tài xế:</div>
                                         <span class="information-value">${success.data.driver.driverList
-                                            .map((item) => item.name)
-                                            .join(", ")}</span>
+                        .map((item) => item.name)
+                        .join(", ")}</span>
                                     </div>
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Phụ xe:</div>
                                         <span class="information-value">${success.data.driver.assistantList
-                                            .map((item) => item.name)
-                                            .join(", ")}</span>
+                        .map((item) => item.name)
+                        .join(", ")}</span>
                                     </div>
                                 </div>
                                 <div class="information-item">
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Tổng số vé đã đặt:</div>
-                                        <span class="information-value"><b>${
-                                            success.data
-                                                .total_number_of_seats_booked
-                                        }</b>. số ghế trống <b>${
-                    success.data.number_of_seats_available
-                }</b></span>
+                                        <span class="information-value"><b>${success.data
+                        .total_number_of_seats_booked
+                    }</b>. số ghế trống <b>${success.data.number_of_seats_available
+                    }</b></span>
                                     </div>
                                     <div class="information-item-group mb-2 d-flex">
                                         <div class="information-label me-2">Thanh toán:</div>
-                                        <span class="information-value"><b>${
-                                            success.data
-                                                .order_number_has_been_paid
-                                        }</b>. hoá đơn <b>${
-                    success.data.order_number
-                }</b></span>
+                                        <span class="information-value"><b>${success.data
+                        .order_number_has_been_paid
+                    }</b>. hoá đơn <b>${success.data.order_number
+                    }</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -216,10 +205,10 @@ var KTOrder = (function () {
     };
     const selectSeat = (e) => {
         const seatId = e.target.closest("#seat_item").dataset.id;
-        if(arraySeat.has(seatId)){
+        if (arraySeat.has(seatId)) {
             arraySeat.delete(seatId);
             e.target.closest("#seat_item").classList.remove("select");
-        }else{
+        } else {
             arraySeat.add(seatId);
             e.target.closest("#seat_item").classList.add("select");
         }
@@ -229,8 +218,8 @@ var KTOrder = (function () {
         const seatId = e.target.closest("#seat_item").dataset.id;
         const array = Array.from(arraySeat);
         const checkExist = array.includes(seatId);
-        if(!checkExist){
-           return toastr.error("Vui lòng chọn ghế mới được booking", "Thất bại");
+        if (!checkExist) {
+            return toastr.error("Vui lòng chọn ghế mới được booking", "Thất bại");
         }
         $.ajax({
             method: "POST",
@@ -243,7 +232,6 @@ var KTOrder = (function () {
                 toastr.success(success.message, "Thành công", {
                     timeOut: 3000,
                 });
-                renderTime(success.data);
             },
             error: (error) => {
                 toastr.error(error.responseJSON.message, "Thất bại");
