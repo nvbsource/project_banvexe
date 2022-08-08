@@ -26,7 +26,7 @@ class SeatController extends Controller
                 "message" => "Chuyến xe không tồn tại trong hệ thống"
             ], 404);
         }
-
+        
         $seats = $trip->vehicle->seats;
         $seatsFindArray = $seats->whereIn('id', $arraySeat);
         if ($seatsFindArray->count() !== count($arraySeat)) {
@@ -35,16 +35,29 @@ class SeatController extends Controller
             ], 422);
         }
 
-        if (PauseDetailSeat::whereIn("seat_id", $arraySeat)->with("pause_seats")) {
+        $pauseSeatsDetail = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function($pauseSeat){
+            return $pauseSeat->where("pauseTime", ">", Carbon::now());
+        })->get();
+
+        if ($pauseSeatsDetail->count() > 0) {
+            return response()->json([
+                "message" => "Có 1 số ghế đang tạm ngưng vui lòng load lại trang " . $pauseSeatsDetail->map(function($seat_detail){
+                    return $seat_detail->seat->name;
+                })
+            ], 422);
         }
 
         $pauseSeatNew = PauseSeat::create([
-            "account_id" => Auth::guard("admin")->user()->id
+            "account_id" => Auth::guard("admin")->user()->id,
+            "pauseTime" => Carbon::now()->addMinute(10)
         ]);
+        
         PauseDetailSeat::insert($seatsFindArray->map(function ($item) use ($pauseSeatNew) {
             return array(
                 "seat_id" => $item->id,
-                "pause_seat_id" => $pauseSeatNew->id
+                "pause_seat_id" => $pauseSeatNew->id,
+                "created_at" => Carbon::now(),
+                "updated_at" => Carbon::now(),
             );
         })->toArray());
 

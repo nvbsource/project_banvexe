@@ -234,7 +234,9 @@ var KTOrder = (function () {
                 });
             },
             error: (error) => {
-                toastr.error(error.responseJSON.message, "Thất bại");
+                toastr.error(error.responseJSON.message, "Thất bại",  {
+                    timeOut: 7000,
+                });
             },
             complete: () => {
                 document
