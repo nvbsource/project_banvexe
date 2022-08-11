@@ -118,11 +118,7 @@ class TripController extends Controller
             })
         ]);
     }
-    function flatten_array(array $demo_array) {
-        $new_array = array();
-        array_walk_recursive($demo_array, function($array) use (&$new_array) { $new_array[] = $array; });
-        return $new_array;
-    }
+
     public function detail($tripId){
         $trip = Trip::find($tripId);
         $companyId = $this->getCompanyAccountLogin()->id;
@@ -171,17 +167,38 @@ class TripController extends Controller
                 "number_of_seats_available" => $trip->vehicle->countSeat - $countSeatBooked,
                 "total_trip_of_route" => $trip->route->trips->count(),
                 "route" => $trip->route->departureDistrict->name. ' - ' . $trip->route->destinationDistrict->name,
+                "route_area" => array(
+                    "departure_route" => $trip->route->departure_name,
+                    "destination_route" => $trip->route->destination_name,
+                    "list_departure_route" => $trip->route->sameWayRoutes,
+                    "list_destination_route" => $trip->route->sameWayRoutes,
+                ),
+                "price" => $trip->price,
                 "seats" => $seats->map(function($item) use ($orderDetails){
                     $indexOrderDetail = array_search($item->id, array_column($orderDetails, 'seat_id'));
                     if($indexOrderDetail !== false && $orderDetails[$indexOrderDetail]["status"]){
                         return array_merge(
                             $item->toArray(),
                             [
-                                "information" => Order::find($orderDetails[$indexOrderDetail]["order_id"])->customer
+                                "information" => Order::find($orderDetails[$indexOrderDetail]["order_id"])->customer,
+                                "status" => Order::find($orderDetails[$indexOrderDetail]["order_id"])->isPayment ? "paymented" : "wait" //wait: chờ thanh toán, paymented: đã thanh toán
                             ]
                         );
                     }else{
-                        return $item;
+                        $checkSeatBlock = $item->pauseSeatDetails()->where("seat_id", $item->id)->whereHas("pauseSeat", function($seat){
+                            return $seat->where("pauseTime", ">", Carbon::now());
+                        })->first();
+                        if($checkSeatBlock){
+                            return array_merge(
+                                $item->toArray(),
+                                [
+                                    "author" => $checkSeatBlock->pauseSeat->account->name,
+                                    "time" => Carbon::createFromDate($checkSeatBlock->pauseSeat->pauseTime)->valueOf() - Carbon::now()->valueOf()
+                                ]
+                            );
+                        }else{
+                            return $item;
+                        }
                     }
                 })
             )

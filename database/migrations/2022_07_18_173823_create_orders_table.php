@@ -16,13 +16,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->enum("paymentMethod", ["COD", "MOMO", "VNPAY", "ZALOPAY"])->default("COD");
+            $table->enum("paymentMethod", ["OFFICE", "MOMO", "VNPAY", "ZALOPAY"])->default("OFFICE");
             $table->boolean("isPayment")->default(false);
             $table->boolean("isTicketReceived")->default(false);
             $table->integer("price");
             $table->integer("discount")->default(0);
-            $table->timestamp("ticketPickUpTime");
-            $table->integer("paymentPalidityPeriod");
+            $table->timestamp("ticketPickUpTime")->nullable();
+            $table->integer("paymentPalidityPeriod")->nullable();
             $table->unsignedBigInteger("ticketOffice_id")->nullable();
             $table->unsignedBigInteger("trip_id");
             $table->unsignedBigInteger("customer_id");

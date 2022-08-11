@@ -80,13 +80,10 @@
     width: 30px;
     font-size: 1rem;
 }
-.seat-item {
-    position: relative;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 .seat-action {
     position: absolute;
+    width: calc(100% - 16.25px * 2);
     bottom: 16.25px;
     left: 16.25px;
 }
@@ -94,6 +91,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border-color: white !important;
 }
 .information-item:nth-child(1) {
     flex: 2;
@@ -104,12 +102,25 @@
 .information-item:nth-child(3) {
     flex: 2;
 }
-.seat-item-blocking {
-    background-color: #20c969;
+.seat-item {
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+    color: black !important;
 }
-.seat-item-blocking .seat-action-item {
-    border-color: white !important;
+#list_seat #seat_item .seat-item-blocking {
+    background-color: #c97320;
+    color: white !important;
 }
+#list_seat #seat_item .seat-item-success {
+    background-color: #438a3c;
+    color: white !important;
+}
+#list_seat #seat_item .seat-item-pause{
+    background-color: #0a6faa;
+    color: white !important;
+}
+
 .flatpickr-calendar{
     width: 315px !important;
 }
@@ -117,7 +128,7 @@
     position: relative;
 }
 .loading-body{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -133,6 +144,55 @@
 .time-item{
     cursor: pointer;
 }
+#seat_item .seat-item{
+    border: 2px solid transparent;
+    background-color: #ebebeb;
+}
+
 #seat_item.select .seat-item{
+    border-color: white;
+    box-shadow: 0 0 5px 3px #0a6faa;
+}
+
+.progress{
+    position: relative;
+    height: 10px;
+    border-radius: 20px;
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
+}
+.progress__percent{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #0a6faa;
+}
+.time-item.select{
+    border: 1px solid white !important;
+}
+[data-theme="light"] .time-item.select{
+    border: 1px solid black !important;
+}
+.seat-action-item{
+    color: black !important;
+    border-color: black !important;
+}
+.seat-name{
+    color: black;
+}
+[data-theme="dark"] #seat_item .seat-item{
+    background-color: #2e2e2e54;
+}
+[data-theme="dark"] .seat-name{
+    color: white;
+}
+
+.seat-item-pause .seat-name, .seat-item-blocking .seat-name, .seat-item-success .seat-name{
+    color: white !important;
+} 
+[data-theme="dark"] .seat-action-item, .seat-item-pause  .seat-action-item, .seat-item-blocking  .seat-action-item, .seat-item-success  .seat-action-item{
+    color: white !important;
     border-color: white !important;
 }

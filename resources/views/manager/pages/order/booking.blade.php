@@ -84,17 +84,22 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="form_order" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-1000px">
             <div class="modal-content rounded">
                 <div class="modal-header border-1 py-5 justify-content-between mb-10">
                     <div class="fs-5 fw-bold">Tạo hoá đơn</div>
-                    <div class="fs-5">10:45 Nước ngầm - Hà Tĩnh (1) 30/04/2022</div>
+                    <div class="fs-5" id="information_trip_modal"></div>
                 </div>
                 <div class="modal-body scroll-y pt-0 pb-15">
-                    <div class="d-flex justify-content-between">
-                        <p>Đang chọn <b>1</b> ghế <button class="mx-3 py-2 px-4 btn btn-dark">B1</button></p>
-                        <p class="d-flex align-items-center">Thời gian còn lại: <span class="fw-bold fs-2 text-danger ms-2">00:26</span></p>
+                    <div class="d-flex justify-content-between mb-10">
+                        <div class="d-flex align-items-center gap-5">
+                            <p class="mb-0">Đang chọn <b id="count_seat"></b> ghế</p>
+                            <div id="list_name_seat">
+                            </div>
+                        </div>
+                        <p class="d-flex align-items-center mb-0">Thời gian còn lại: <span class="fw-bold fs-2 text-danger ms-2" id="time_down">00:00</span></p>
                     </div>
                     <form id="form_edit_staff" class="form fv-plugins-bootstrap5 fv-plugins-framework">
                         <div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container">
@@ -116,7 +121,7 @@
                                             fill="currentColor" />
                                     </svg>
                                 </span>
-                                <input class="form-control ps-12" placeholder="Ngày khởi hành" name="start_date" readonly/>
+                                <input class="form-control ps-12" placeholder="Ngày khởi hành" name="start_date_modal" readonly disabled/>
                             </div>
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
@@ -186,12 +191,7 @@
                                         <span class="required">Đón khách</span>
                                     </label>
                                     <select name="departureSameWayRoute" aria-label="Chọn điểm đón khách" data-control="select2"
-                                        data-placeholder="Chọn điểm đón khách..." class="form-select fw-semibold">
-                                        <option value="">Chọn điểm đón khách...</option>
-                                        @foreach ($routes as $item)
-                                        <option value="{{$item->id}}">{{$item->departureDistrict->name}} -
-                                            {{$item->destinationDistrict->name}} ({{$item->trips->count()}})</option>
-                                        @endforeach
+                                        data-placeholder="Chọn điểm đón khách..."  data-dropdown-parent="#form_order" class="form-select fw-semibold">
                                     </select>
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -202,12 +202,7 @@
                                         <span class="required">Trả khách</span>
                                     </label>
                                     <select name="destinationSameWayRoute" aria-label="Chọn điểm trả khách" data-control="select2"
-                                        data-placeholder="Chọn điểm trả khách..." class="form-select fw-semibold">
-                                        <option value="">Chọn điểm trả khách...</option>
-                                        @foreach ($routes as $item)
-                                        <option value="{{$item->id}}">{{$item->departureDistrict->name}} -
-                                            {{$item->destinationDistrict->name}} ({{$item->trips->count()}})</option>
-                                        @endforeach
+                                        data-placeholder="Chọn điểm trả khách..." data-dropdown-parent="#form_order" class="form-select fw-semibold">
                                     </select>
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -241,7 +236,7 @@
                                         <span class="required">Hình thức thanh toán</span>
                                     </label>
                                     <select class="form-select mb-2" name="methodPayment" data-control="select2" data-hide-search="true" data-placeholder="Chọn hình thức thanh toán">
-                                        <option value="office">Tại quầy</option>
+                                        <option value="office" selected>Tại quầy</option>
                                         <option value="vnpay">VNPay</option>
                                         <option value="momo">Momo</option>
                                     </select>
@@ -253,36 +248,36 @@
                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                         <span class="required">Tổng tiền</span>
                                     </label>
-                                    <input type="text" class="form-control" name="sum" value="0 vnđ" readonly>
+                                    <input type="text" class="form-control" name="total_price" value="0" readonly>
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex gap-3 mb-8">
                             <label class="form-check form-switch form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" value="1" checked="checked">
+                                <input class="form-check-input" type="checkbox" name="sendEmail" checked="checked">
                                 <span class="form-check-label fw-semibold text-muted">Gửi Email</span>
                             </label>
                             <label class="form-check form-switch form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" value="1" checked="checked">
+                                <input class="form-check-input" type="checkbox" name="sendPhone">
                                 <span class="form-check-label fw-semibold text-muted">Gửi SMS</span>
                             </label>
                             <label class="form-check form-switch form-check-custom form-check-solid">
-                                <input class="form-check-input" type="checkbox" value="1">
+                                <input class="form-check-input" type="checkbox" name="received_ticket">
                                 <span class="form-check-label fw-semibold text-muted">Nhận vé</span>
                             </label>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div>
-                                <button type="submit" id="form_edit_staff_submit" class="btn btn-danger">
+                                <button type="submit" id="#" class="btn btn-danger">
                                     <span class="indicator-label">Huỷ vé</span>
                                     <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
                             <div>
-                                <button type="reset" id="form_edit_staff_cancel" class="btn btn-light me-3">Đóng</button>
-                                <button type="submit" id="form_edit_staff_submit" class="btn btn-primary">
+                                <button type="reset" id="form_cancel_modal" class="btn btn-light me-3">Đóng</button>
+                                <button type="submit" id="form_submit_modal" class="btn btn-primary">
                                     <span class="indicator-label">Tạo vé</span>
                                     <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

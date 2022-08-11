@@ -8,9 +8,11 @@ use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassengerCarCompanyApiController;
+use App\Http\Controllers\Manager\OrderController;
 use App\Http\Controllers\Manager\SeatController;
 use App\Http\Controllers\Manager\TripController;
 use App\Http\Controllers\Manager\VehicleController;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,8 +58,13 @@ Route::group(['prefix' => 'staff', 'middleware' => 'authAdmin'], function () {
 Route::group(['prefix' => 'route', 'route' => 'authAdmin'], function () {
     Route::post('/', [RouteController::class, 'create']);
 });
+
 Route::group(['prefix' => 'seat', 'route' => 'authAdmin'], function () {
     Route::post('/blockseat', [SeatController::class, 'blockSeat']);
+});
+
+Route::group(['prefix' => 'order', 'route' => 'authAdmin'], function () {
+    Route::post('/', [OrderController::class, 'create']);
 });
 
 

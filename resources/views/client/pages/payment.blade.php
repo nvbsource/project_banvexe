@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <div class="d-flex">
-                    <input type="radio" name="payment_method" value="COD" id="payment_cod">
+                    <input type="radio" name="payment_method" value="OFFICE" id="payment_cod">
                     <label for="payment_cod">Thanh toán tại văn phòng</label>
                 </div>
                 <div class="d-flex">

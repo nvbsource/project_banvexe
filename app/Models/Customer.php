@@ -14,9 +14,6 @@ class Customer extends Model
         'email',
         'birthday',
         'idCard',
-        'activePhone',
-        'activeMail',
-        'isBlocked',
     ];
     public function orders()
     {

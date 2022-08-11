@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Đăng nhập hệ thống quản lý nhà xe</title>
+		<title>Quên mật khẩu hệ thống quản lý nhà xe</title>
 		<meta charset="utf-8" />
 		<link rel="shortcut icon" href="{{asset('admin/assets/media/logos/favicon.ico')}}" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -28,43 +28,30 @@
 				<div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
 					<div class="bg-body d-flex flex-center rounded-4 w-md-600px p-10">
 						<div class="w-md-400px">
-							<form class="form w-100" novalidate="novalidate" action="{{route('handleAdminLogin')}}" method="POST">
+							<form class="form w-100" novalidate="novalidate" action="{{route('forgot.password.post')}}" method="POST">
 								@csrf
 								<div class="text-center mb-11">
-									<h1 class="text-dark fw-bolder mb-3">Đăng Nhập Hệ Thống</h1>
-									<div class="text-gray-500 fw-semibold fs-6">Sử dụng tài khoản của hệ thống để đăng nhập</div>
+									<h1 class="text-dark fw-bolder mb-3">Quên mật khẩu</h1>
+									<div class="text-gray-500 fw-semibold fs-6">Sử dụng tài khoản email của bạn để lấy lại mật khẩu</div>
 								</div>
-								<div class="row g-3 mb-9">
-									<div class="col-md-12">
-										<a href="{{route("adminLoginGoogle")}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-										<img alt="Logo" src="{{asset('admin/assets/media/svg/brand-logos/google-icon.svg')}}" class="h-15px me-3" />Sign in with Google</a>
-									</div>
-								</div>
-								<div class="separator separator-content my-14">
-									<span class="w-125px text-gray-500 fw-semibold fs-7">Hoặc Email</span>
-								</div>
-								@if(Session::has('error'))
-									<div class="alert alert-danger">
-										{{ Session::get('error') }}
-									</div>
-								@elseif(Session::has('success'))
+                                @foreach ($errors->all() as $error)
+                                    <div class="alert alert-danger">
+                                        {{ $error }}
+                                    </div>
+                                    @break
+                                @endforeach
+
+								@if(Session::has('success'))
 									<div class="alert alert-success">
 										{{ Session::get('success') }}
 									</div>
 								@endif
 								<div class="fv-row mb-8">
-									<input type="text" placeholder="Username" name="username" autocomplete="off" class="form-control bg-transparent" />
-								</div>
-								<div class="fv-row mb-3">
-									<input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" />
-								</div>
-								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-									<div></div>
-									<a href="{{route('forgot.password.get')}}" class="link-primary">Quên mật khẩu</a>
+									<input type="text" placeholder="Địa chỉ email" name="email" class="form-control bg-transparent" />
 								</div>
 								<div class="d-grid mb-10">
 									<button type="submit" class="btn btn-primary">
-										<span class="indicator-label">Đăng Nhập</span>
+										<span class="indicator-label">Lấy lại</span>
 									</button>
 								</div>
 							</form>

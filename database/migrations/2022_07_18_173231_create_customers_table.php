@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
-            $table->string('email')->unique();
-            $table->date('birthday');
-            $table->string('idCard');
-            $table->boolean('activePhone');
-            $table->boolean('activeEmail');
-            $table->boolean('isBlocked');
+            $table->string('email')->unique()->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('idCard')->nullable();
+            $table->boolean('activePhone')->default(false);
+            $table->boolean('activeEmail')->default(false);
+            $table->boolean('isBlocked')->default(false);
             $table->timestamps();
         });
     }
