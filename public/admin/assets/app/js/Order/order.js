@@ -17,6 +17,7 @@ var KTOrder = (function () {
     var trip_id;
     var timeOutRefresh;
     var timeTimeDown;
+    var btnCheckDiscount;
     var initOrder = function () {
         startDate.flatpickr({
             minDate: "today",
@@ -410,6 +411,25 @@ var KTOrder = (function () {
             },
         });
     };
+    const handleCheckDiscount = () => {
+        $.ajax({
+            method: "POST",
+            url: "/discount/checkDiscount",
+            data: {
+                "code": $(formModal.querySelector("[name='discountCode']")).val(),
+            },
+            success: (success) => {
+                toastr.success(success.message, "Thành công");
+            },
+            error: (error) => {
+                toastr.error(error.responseJSON.message, "Thất bại");
+            },
+            complete: () => {
+                btnCheckDiscount.removeAttribute('data-kt-indicator');
+                btnCheckDiscount.disabled = false;
+            }
+        })
+    }
     const handleFormModal = () => {
         validator = FormValidation.formValidation(
             formModal,
@@ -530,7 +550,9 @@ var KTOrder = (function () {
             eleInformationSeats = document.querySelector("#information_seats");
             submitFromModal = document.querySelector("#form_submit_modal");
             cancelFormModal = document.querySelector("#form_cancel_modal");
+            btnCheckDiscount = document.querySelector("#btn_check_discount");
             refresh.addEventListener("click", handleRefreshInformation);
+            btnCheckDiscount.addEventListener("click", handleCheckDiscount);
             initOrder();
             handleFormModal();
         },

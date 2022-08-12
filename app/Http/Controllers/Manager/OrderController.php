@@ -96,7 +96,7 @@ class OrderController extends Controller
         $orderDetails = DetailOrder::insert(array_map(function($seat) use ($order){
             return array(
                 "seat_id" => $seat,
-                "order_id" => $order->id
+                "order_id" => $order->id,
             );
         }, $seatsBook));
 

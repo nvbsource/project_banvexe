@@ -3,11 +3,11 @@
 use App\Http\Controllers\Manager\AccountController;
 use App\Http\Controllers\Manager\OfficeController;
 use App\Http\Controllers\Manager\RouteController;
-use App\Http\Controllers\Api\TripApiController;
 use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassengerCarCompanyApiController;
+use App\Http\Controllers\Manager\DiscountController;
 use App\Http\Controllers\Manager\OrderController;
 use App\Http\Controllers\Manager\SeatController;
 use App\Http\Controllers\Manager\TripController;
@@ -65,6 +65,10 @@ Route::group(['prefix' => 'seat', 'route' => 'authAdmin'], function () {
 
 Route::group(['prefix' => 'order', 'route' => 'authAdmin'], function () {
     Route::post('/', [OrderController::class, 'create']);
+});
+
+Route::group(['prefix' => 'discount', 'route' => 'authAdmin'], function () {
+    Route::post('/checkDiscount', [DiscountController::class, 'checkDiscount']);
 });
 
 

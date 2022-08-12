@@ -223,9 +223,20 @@
                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                         <span>Mã giảm giá</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Nhập mã giảm giá (nếu có)"
-                                        name="discountCode">
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá (nếu có)"
+                                                name="discountCode">
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-4">
+                                            <button type="button" class="btn btn-primary w-100" id="btn_check_discount">
+                                                <span class="indicator-label">Kiểm tra</span>
+                                                <span class="indicator-progress">Please wait...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

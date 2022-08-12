@@ -16,6 +16,9 @@ class DiscountCode extends Model
         "order_id",
         "passenger_car_company_id",
     ];
+
+    protected $primaryKey = 'code';
+
     public function order()
     {
         return $this->belongsTo(Order::class, "order_id", "id");

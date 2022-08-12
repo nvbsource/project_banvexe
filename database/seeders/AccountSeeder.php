@@ -21,7 +21,7 @@ class AccountSeeder extends Seeder
             'password' => '$2a$12$lj7idpHXqdMqLPFGFt5SauRoOCKAK8.MleN5FyfWt2WNI4csv4kBW',
             'role' => 'manager',
             'passenger_car_company_id' => 1,
-            'ticket_office_id' => null,
+            'ticket_office_id' => 1,
             'remember_token' => Str::random(10),
         ]);
         \App\Models\Account::factory()->create([
@@ -29,7 +29,7 @@ class AccountSeeder extends Seeder
             'name' => "Nguyễn Xuân Lộc",
             'username' => "loc123",
             'password' => '$2a$12$lj7idpHXqdMqLPFGFt5SauRoOCKAK8.MleN5FyfWt2WNI4csv4kBW',
-            'role' => 'bus',
+            'role' => 'manager',
             'passenger_car_company_id' => 1,
             'ticket_office_id' => 1,
             'remember_token' => Str::random(10),
@@ -39,7 +39,7 @@ class AccountSeeder extends Seeder
             'name' => "Phan thanh phương",
             'username' => "phuong123",
             'password' => '$2a$12$lj7idpHXqdMqLPFGFt5SauRoOCKAK8.MleN5FyfWt2WNI4csv4kBW',
-            'role' => 'ticket',
+            'role' => 'manager',
             'passenger_car_company_id' => 1,
             'ticket_office_id' => 1,
             'remember_token' => Str::random(10),
