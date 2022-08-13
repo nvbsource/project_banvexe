@@ -63,7 +63,7 @@
                 <img src="{{asset('admin/assets/media/auth/404-error-dark.png')}}" class="mw-100 mh-300px theme-dark-show" alt="">
               </div>
               <div class="mb-0">
-                <a href="{{route("adminLogin")}}" class="btn btn-sm btn-primary">Quay về trang chủ</a>
+                <a href="{{route("bmsLogin")}}" class="btn btn-sm btn-primary">Quay về trang chủ</a>
               </div>
             </div>
           </div>

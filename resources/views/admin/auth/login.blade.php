@@ -28,7 +28,7 @@
 				<div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
 					<div class="bg-body d-flex flex-center rounded-4 w-md-600px p-10">
 						<div class="w-md-400px">
-							<form class="form w-100" novalidate="novalidate" action="{{route('handleAdminLogin')}}" method="POST">
+							<form class="form w-100" novalidate="novalidate" action="{{route('adminHandleLogin')}}" method="POST">
 								@csrf
 								<div class="text-center mb-11">
 									<h1 class="text-dark fw-bolder mb-3">Đăng Nhập Hệ Thống</h1>
@@ -60,7 +60,7 @@
 								</div>
 								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 									<div></div>
-									<a href="{{route('forgot.password.get')}}" class="link-primary">Quên mật khẩu</a>
+									<a href="{{route('adminForgotPassword')}}" class="link-primary">Quên mật khẩu</a>
 								</div>
 								<div class="d-grid mb-10">
 									<button type="submit" class="btn btn-primary">

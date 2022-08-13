@@ -9,10 +9,10 @@ class PassengerCarCompanyController extends Controller
     public function viewList()
     {
         $listCompany = PassengerCarCompany::all();
-        return view("manager.pages.passengerCarCompany.index", compact('listCompany'));
+        return view("bms.manager.pages.passengerCarCompany.index", compact('listCompany'));
     }
     public function viewCreate()
     {
-        return view("manager.pages.passengerCarCompany.createPassengerCarCompany");
+        return view("bms.manager.pages.passengerCarCompany.createPassengerCarCompany");
     }
 }

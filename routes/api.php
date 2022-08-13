@@ -33,7 +33,7 @@ Route::group(["prefix" => "driver"], function () {
     Route::get('/getDriverByCompany/{company_id}', [DriverController::class, 'getDriverByCompany']);
 });
 
-Route::group(['prefix' => 'trip', 'middleware' => 'authAdmin'], function () {
+Route::group(['prefix' => 'trip', 'middleware' => 'authBms'], function () {
     Route::get('/search', [TripController::class, 'search']);
     Route::get('/{tripId}', [TripController::class, 'detail']);
 });
@@ -42,7 +42,7 @@ Route::group(["prefix" => "passengerCarCompany"], function () {
     Route::post('/', [PassengerCarCompanyApiController::class, 'create']);
 });
 
-Route::group(['prefix' => 'office', 'middleware' => 'authAdmin'], function () {
+Route::group(['prefix' => 'office', 'middleware' => 'authBms'], function () {
     Route::post('/', [OfficeController::class, 'create']);
     Route::delete('/{id}', [OfficeController::class, 'detroy']);
     Route::put('/{id}', [OfficeController::class, 'update']);
@@ -50,29 +50,29 @@ Route::group(['prefix' => 'office', 'middleware' => 'authAdmin'], function () {
     Route::post('/{id}/staff', [AccountController::class, 'create']);
 });
 
-Route::group(['prefix' => 'staff', 'middleware' => 'authAdmin'], function () {
+Route::group(['prefix' => 'staff', 'middleware' => 'authBms'], function () {
     Route::put('/{id}', [AccountController::class, 'update']);
     Route::delete('/{id}', [AccountController::class, 'detroy']);
 });
 
-Route::group(['prefix' => 'route', 'route' => 'authAdmin'], function () {
+Route::group(['prefix' => 'route', 'route' => 'authBms'], function () {
     Route::post('/', [RouteController::class, 'create']);
 });
 
-Route::group(['prefix' => 'seat', 'route' => 'authAdmin'], function () {
+Route::group(['prefix' => 'seat', 'route' => 'authBms'], function () {
     Route::post('/blockseat', [SeatController::class, 'blockSeat']);
 });
 
-Route::group(['prefix' => 'order', 'route' => 'authAdmin'], function () {
+Route::group(['prefix' => 'order', 'route' => 'authBms'], function () {
     Route::post('/', [OrderController::class, 'create']);
 });
 
-Route::group(['prefix' => 'discount', 'route' => 'authAdmin'], function () {
+Route::group(['prefix' => 'discount', 'route' => 'authBms'], function () {
     Route::post('/checkDiscount', [DiscountController::class, 'checkDiscount']);
 });
 
 
-Route::group(['prefix' => 'vehicle', 'middleware' => 'authAdmin'], function () {
+Route::group(['prefix' => 'vehicle', 'middleware' => 'authBms'], function () {
     Route::post('/', [VehicleController::class, 'create']);
     Route::delete('/{id}', [VehicleController::class, 'detroy']);
     Route::put('/{id}', [VehicleController::class, 'update']);

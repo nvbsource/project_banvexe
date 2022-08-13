@@ -39,7 +39,7 @@ class SeatController extends Controller
 
         
         $pauseSeatByAccount = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function ($pauseSeat) {
-            return $pauseSeat->where("pauseTime", ">", Carbon::now())->where("account_id", "!=", Auth::guard("admin")->user()->id);
+            return $pauseSeat->where("pauseTime", ">", Carbon::now())->where("account_id", "!=", Auth::guard("bms")->user()->id);
         })->get();
 
         $seatPaymented = DetailOrder::whereIn("seat_id", $arraySeat)->whereHas("order", function ($item) use ($trip){
@@ -64,7 +64,7 @@ class SeatController extends Controller
         $unblockedSeats = $seatsFindArray->whereNotIn("id", $pauseSeatsDetail->pluck("seat_id")->toArray());
         
         $pauseSeatNew = PauseSeat::create([
-            "account_id" => Auth::guard("admin")->user()->id,
+            "account_id" => Auth::guard("bms")->user()->id,
             "pauseTime" => Carbon::now()->addMinute(5)
         ]);
 

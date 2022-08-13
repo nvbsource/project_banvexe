@@ -9,7 +9,7 @@ use App\Http\Controllers\Manager\VehicleController;
 use App\Http\Controllers\Manager\RouteController;
 use App\Http\Controllers\Manager\OfficeController;
 
-Route::group(['middleware' => ['authAdmin', 'accountAccess:manager'], "as" => "manager."], function () {
+Route::group(['middleware' => ['authBms', 'accountAccess:manager'], "as" => "manager."], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
 

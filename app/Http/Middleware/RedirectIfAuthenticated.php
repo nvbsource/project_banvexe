@@ -22,21 +22,23 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if ($guard == "admin") {
-                    switch(Auth::guard($guard)->user()->role){
-                        case "manager":
-                            return redirect(RouteServiceProvider::MANAGER_HOME);
+                switch ($guard) {
+                    case "bms":
+                        switch (Auth::guard($guard)->user()->role) {
+                            case "manager":
+                                return redirect(RouteServiceProvider::MANAGER_HOME);
+                                break;
+                            case "bus":
+                                return redirect(RouteServiceProvider::BUS_HOME);
+                                break;
+                            case "ticket":
+                                return redirect(RouteServiceProvider::TICKET_HOME);
+                                break;
+                        }
                         break;
-                        case "bus":
-                            return redirect(RouteServiceProvider::BUS_HOME);
+                    case "admin":
+                        return redirect(RouteServiceProvider::ADMIN_HOME);
                         break;
-                        case "ticket":
-                            return redirect(RouteServiceProvider::TICKET_HOME);
-                        break;
-                        case "admin":
-                            return redirect(RouteServiceProvider::ADMIN_HOME);
-                        break;
-                    }
                 }
                 return redirect(RouteServiceProvider::HOME);
             }

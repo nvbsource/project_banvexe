@@ -17,7 +17,7 @@ class RouteController extends Controller
         $companyId = $this->getCompanyAccountLogin()->id;
         $routes = Route::where("passenger_car_company_id",  $companyId)->orderByDesc("id")->get();
         $districts = District::all();
-        return view('manager.pages.route.index', compact('routes', 'districts'));
+        return view('bms.manager.pages.route.index', compact('routes', 'districts'));
     }
     public function create(AddRouteRequest $request)
     {

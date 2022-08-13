@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Account;
+use App\Models\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +26,7 @@ class ForgotPasswordController extends Controller
     {
         $request->validate(
             [
-                'email' => 'required|email|exists:accounts',
+                'email' => 'required|email|exists:admins',
             ],
             [
                 "email.required" => "Vui lòng nhập email",
@@ -97,7 +97,7 @@ class ForgotPasswordController extends Controller
             return back()->withInput()->with('error', 'Token không hợp lệ');
         }
 
-        $findAccount = Account::where("email", $findToken->email)->first();
+        $findAccount = Admin::where("email", $findToken->email)->first();
 
         if (!$findAccount) {
             DB::table('password_resets')->where(['email' => $findToken->email])->delete();

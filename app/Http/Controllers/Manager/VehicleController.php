@@ -18,19 +18,19 @@ class VehicleController extends Controller
     use FunctionTrait;
     public function viewList()
     {
-        $passengerCarCompany = Auth::guard('admin')->user()->passengerCarCompany->id;
+        $passengerCarCompany = Auth::guard("bms")->user()->passengerCarCompany->id;
         $vehicles = Vehicle::where("passenger_car_company_id", $passengerCarCompany)->get();
-        return view('manager.pages.vehicle.index', compact('vehicles'));
+        return view('bms.manager.pages.vehicle.index', compact('vehicles'));
     }
     public function detail($id)
     {
         $vehicle = Vehicle::find($id);
         $rangeOfVehicles = RangeOfVehicle::all();
-        return view('manager.pages.vehicle.detail', compact('vehicle','rangeOfVehicles'));
+        return view('bms.manager.pages.vehicle.detail', compact('vehicle','rangeOfVehicles'));
     }
     public function viewCreate(){
         $rangeOfVehicles = RangeOfVehicle::all();
-        return view("manager.pages.vehicle.create", compact('rangeOfVehicles'));
+        return view("bms.manager.pages.vehicle.create", compact('rangeOfVehicles'));
     }
     public function viewUpload($id){
         $vehicle = Vehicle::where([
@@ -41,7 +41,7 @@ class VehicleController extends Controller
             abort(404);
         }
         $pictures = PicturesVehicle::where("vehicle_id", $id)->get();
-        return view("manager.pages.vehicle.upload", compact('pictures', 'id'));
+        return view("bms.manager.pages.vehicle.upload", compact('pictures', 'id'));
     }
     public function uploadImage(UploadImageVehicleRequest $request, $id){
         $vehicle = Vehicle::find($id);

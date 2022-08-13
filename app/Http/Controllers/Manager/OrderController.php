@@ -22,7 +22,7 @@ class OrderController extends Controller
         $companyId = $this->getCompanyAccountLogin()->id;
         $trips = Trip::where("passenger_car_company_id",  $companyId)->get();
         $routes = Route::where("passenger_car_company_id",  $companyId)->get();
-        return view("manager.pages.order.booking", compact("trips", "routes"));
+        return view("bms.manager.pages.order.booking", compact("trips", "routes"));
     }
     public function create(CreateOrderRequest $request){
         $data = $request->all();
@@ -109,7 +109,7 @@ class OrderController extends Controller
         }
         if($receivedTicket){
             $order->ticketPickUpTime = Carbon::now();
-            $order->ticketOffice_id = Auth::guard("admin")->user()->ticketOffice->id;
+            $order->ticketOffice_id = Auth::guard("bms")->user()->ticketOffice->id;
         }
 
         $order->save();

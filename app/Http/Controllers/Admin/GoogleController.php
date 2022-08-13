@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Account;
+use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -19,42 +19,16 @@ class GoogleController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
-            $findUser = Account::where('email', $user->email)->first();
+            $findUser = Admin::where('email', $user->email)->first();
             if ($findUser) {
                 Auth::guard("admin")->login($findUser);
-                switch (Auth::guard('admin')->user()->role) {
-                    case "manager":
-                        return redirect(RouteServiceProvider::MANAGER_HOME);
-                        break;
-                    case "bus":
-                        return redirect(RouteServiceProvider::BUS_HOME);
-                        break;
-                    case "ticket":
-                        return redirect(RouteServiceProvider::TICKET_HOME);
-                        break;
-                    case "admin":
-                        return redirect(RouteServiceProvider::ADMIN_HOME);
-                        break;
-                }
+                return redirect(RouteServiceProvider::ADMIN_HOME);
             } else {
                 return redirect()->route("adminLogin")->with('error', 'Tài khoản không tồn tại trong hệ thống');
             }
         } catch (Exception $e) {
             if (Auth::guard("admin")->check()) {
-                switch (Auth::guard('admin')->user()->role) {
-                    case "manager":
-                        return redirect(RouteServiceProvider::MANAGER_HOME);
-                        break;
-                    case "bus":
-                        return redirect(RouteServiceProvider::BUS_HOME);
-                        break;
-                    case "ticket":
-                        return redirect(RouteServiceProvider::TICKET_HOME);
-                        break;
-                    case "admin":
-                        return redirect(RouteServiceProvider::ADMIN_HOME);
-                        break;
-                }
+                return redirect(RouteServiceProvider::ADMIN_HOME);
             } else {
                 return redirect()->route("adminLogin")->with('error', 'Lỗi đăng nhập');
             }

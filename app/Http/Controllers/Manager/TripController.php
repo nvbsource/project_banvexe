@@ -23,7 +23,7 @@ class TripController extends Controller
     public function viewList()
     {
         $trips = Trip::all();
-        return view('manager.pages.trip.index', compact('trips'));
+        return view('bms.manager.pages.trip.index', compact('trips'));
     }
     public function viewCreate()
     {
@@ -31,7 +31,7 @@ class TripController extends Controller
         $assistantDrivers = AssistantDriver::all();
         $vehicles = Vehicle::all();
         $routes = Route::all();
-        return view('manager.pages.trip.createTrip', compact('drivers', 'assistantDrivers', 'vehicles', 'routes'));
+        return view('bms.manager.pages.trip.createTrip', compact('drivers', 'assistantDrivers', 'vehicles', 'routes'));
     }
     public function handleCreate(CreateTripRequest $request)
     {

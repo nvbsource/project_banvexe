@@ -17,11 +17,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('admin')->guest()) {
+        if (Auth::guard("admin")->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->route('adminLogin');
+                return redirect()->route('bmsLogin');
             }
         }
         return $next($request);

@@ -17,29 +17,16 @@ class AdminController extends Controller
     public function handleLogin(Request $request)
     {
         if (Auth::guard("admin")->attempt($request->only('username', 'password'))) {
-            switch(Auth::guard('admin')->user()->role){
-                case "manager":
-                    return redirect(RouteServiceProvider::MANAGER_HOME);
-                break;
-                case "bus":
-                    return redirect(RouteServiceProvider::BUS_HOME);
-                break;
-                case "ticket":
-                    return redirect(RouteServiceProvider::TICKET_HOME);
-                break;
-                case "admin":
-                    return redirect(RouteServiceProvider::ADMIN_HOME);
-                break;
-            }
+            return redirect(RouteServiceProvider::ADMIN_HOME);
         } else {
             return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng!');
         }
     }
     
-    public function hangleLogout()
+    public function handleLogout()
     {
         Session::flush();
-        Auth::guard('admin')->logout();
+        Auth::guard("admin")->logout();
         return redirect()->route('adminLogin');
     }
 }

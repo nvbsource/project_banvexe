@@ -16,7 +16,7 @@ class OfficeController extends Controller
     {
         $companyId = $this->getCompanyAccountLogin()->id;
         $offices = TicketOffice::where("passenger_car_company_id",  $companyId)->orderByDesc("id")->get();
-        return view('manager.pages.office.index', compact('offices'));
+        return view('bms.manager.pages.office.index', compact('offices'));
     }
     public function viewDetail($id)
     {
@@ -33,7 +33,7 @@ class OfficeController extends Controller
             "passenger_car_company_id" => $companyId
         ])->orderByDesc("id")->get();
         $roles = Role::all();
-        return view('manager.pages.office.detail', compact('staffs', 'office', 'roles'));
+        return view('bms.manager.pages.office.detail', compact('staffs', 'office', 'roles'));
     }
     public function create(TicketOfficeRequest $request)
     {

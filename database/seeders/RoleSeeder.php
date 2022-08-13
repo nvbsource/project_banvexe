@@ -26,9 +26,5 @@ class RoleSeeder extends Seeder
             "role" => "bus",
             "name" => "Nhân viên điều hành xe"
         ]);
-        \App\Models\Role::factory()->create([
-            "role" => "contact",
-            "name" => "Nhân viên chăm sóc khách hàng"
-        ]);
     }
 }

@@ -6,6 +6,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('manager.pages.dashboard');
+        return view('bms.manager.pages.dashboard');
     }
 }

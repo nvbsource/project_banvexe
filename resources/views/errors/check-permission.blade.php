@@ -65,7 +65,7 @@
                         <!--end::Text-->
                         <!--begin::Link-->
                         <div class="mb-11">
-                            <a href="{{route("adminLogin")}}" class="btn btn-sm btn-primary">Trở về trang chủ</a>
+                            <a href="{{route("bmsLogin")}}" class="btn btn-sm btn-primary">Trở về trang chủ</a>
                         </div>
                         <!--end::Link-->
                         <!--begin::Illustration-->

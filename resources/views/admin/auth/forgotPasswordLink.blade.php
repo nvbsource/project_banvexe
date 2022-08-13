@@ -14,7 +14,7 @@
 				<div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
 					<div class="d-flex flex-center flex-column flex-lg-row-fluid">
 						<div class="w-lg-500px p-10">
-							<form class="form w-100" novalidate="novalidate" action="{{route("reset.password.post")}}" method="POST">
+							<form class="form w-100" novalidate="novalidate" action="{{route("adminHandleResetPassword")}}" method="POST">
 								@csrf
 								<div class="text-center mb-10">
 									<h1 class="text-dark fw-bolder mb-3">Cài đặt mật khẩu mới</h1>

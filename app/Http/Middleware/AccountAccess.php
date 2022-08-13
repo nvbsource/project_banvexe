@@ -17,7 +17,7 @@ class AccountAccess
      */
     public function handle(Request $request, Closure $next, $userType)
     {
-        if(Auth::guard('admin')->user()->role == $userType){
+        if(Auth::guard("bms")->user()->role == $userType){
             return $next($request);
         }
           

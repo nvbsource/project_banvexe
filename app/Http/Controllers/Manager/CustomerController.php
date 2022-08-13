@@ -9,6 +9,6 @@ class CustomerController extends Controller
     public function viewList()
     {
         $customers = Customer::all();
-        return view('manager.pages.customer.index', compact('customers'));
+        return view('bms.manager.pages.customer.index', compact('customers'));
     }
 }

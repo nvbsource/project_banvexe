@@ -7,7 +7,7 @@ trait FunctionTrait
 {
     protected function getCompanyAccountLogin()
     {
-        return Auth::guard("admin")->user()->passengerCarCompany;
+        return Auth::guard("bms")->user()->passengerCarCompany;
     }
 }
 ?>
