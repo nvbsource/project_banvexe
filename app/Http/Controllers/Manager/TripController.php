@@ -96,7 +96,7 @@ class TripController extends Controller
 
         $trips = Trip::where(["route_id" => $routeId, "passenger_car_company_id" => $companyId])->whereDate("start_date", "=", $startDate)->get();
         $dateFormat = Carbon::parse($startDate)->format('d-m-Y');
-        
+
         if ($trips->count() <= 0) {
             return response()->json([
                 "message" => "Không tìm thấy chuyến xe nào ngày " . $dateFormat,
@@ -107,7 +107,11 @@ class TripController extends Controller
             "message" => "Có " . $trips->count() . " chuyến xe đi từ " . $routeFind->departureDistrict->name . " - " . $routeFind->destinationDistrict->name . " ngày " . $dateFormat,
             "data" => $trips->map(function ($item) {
                 $countSeatBooked = $item->orders->reduce(function ($sum, $order) {
-                    return $sum += $order->detailsOrders->where("status", true)->count();
+                    return $sum += $order->detailsOrders()->whereHas("order", function ($item) {
+                        return $item->where("isPayment", true)->orWhereHas("detailsOrders", function($query){
+                            return $query->where("status", true)->where("paymentMethod", "=", "OFFICE");
+                        });
+                    })->count();
                 }, 0);
                 return array(
                     "trip_id" => $item->id,
@@ -119,7 +123,8 @@ class TripController extends Controller
         ]);
     }
 
-    public function detail($tripId){
+    public function detail($tripId)
+    {
         $trip = Trip::find($tripId);
         $companyId = $this->getCompanyAccountLogin()->id;
 
@@ -132,21 +137,25 @@ class TripController extends Controller
         $dateTimeFormat = Carbon::parse($trip->start_date)->format('h:i');
         $dateFormat = Carbon::parse($trip->start_date)->format('d-m-Y');
         $countSeatBooked = $trip->orders->reduce(function ($sum, $order) {
-            return $sum += $order->detailsOrders->where("status", true)->count();
+            return $sum += $order->detailsOrders()->whereHas("order", function ($item) {
+                return $item->where("isPayment", true)->orWhereHas("detailsOrders", function($query){
+                    return $query->where("status", true)->where("paymentMethod", "=", "OFFICE");
+                });
+            })->count();
         }, 0);
         $seats = $trip->vehicle->seats()->select(["id", "name", "isLocked"])->get();
         $orderDetails = $trip->orders()->with("detailsOrders")->get();
-        $orderDetails = array_merge(...$orderDetails->map(function($item){
+        $orderDetails = array_merge(...$orderDetails->map(function ($item) {
             return $item->toArray()['details_orders'];
         })->toArray());
 
         $driverList = $trip->drivers()->with("driver")->get();
-        $driverList = $driverList->map(function($item){
+        $driverList = $driverList->map(function ($item) {
             return $item->toArray()['driver'];
         })->toArray();
 
         $assistantList = $trip->assitantDrivers()->with("assistantDriver")->get();
-        $assistantList = $assistantList->map(function($item){
+        $assistantList = $assistantList->map(function ($item) {
             return $item->toArray()['assistant_driver'];
         })->toArray();
         return response()->json([
@@ -166,7 +175,7 @@ class TripController extends Controller
                 ),
                 "number_of_seats_available" => $trip->vehicle->countSeat - $countSeatBooked,
                 "total_trip_of_route" => $trip->route->trips->count(),
-                "route" => $trip->route->departureDistrict->name. ' - ' . $trip->route->destinationDistrict->name,
+                "route" => $trip->route->departureDistrict->name . ' - ' . $trip->route->destinationDistrict->name,
                 "route_area" => array(
                     "departure_route" => $trip->route->departure_name,
                     "destination_route" => $trip->route->destination_name,
@@ -174,31 +183,59 @@ class TripController extends Controller
                     "list_destination_route" => $trip->route->sameWayRoutes,
                 ),
                 "price" => $trip->price,
-                "seats" => $seats->map(function($item) use ($orderDetails){
-                    $indexOrderDetail = array_search($item->id, array_column($orderDetails, 'seat_id'));
-                    if($indexOrderDetail !== false && $orderDetails[$indexOrderDetail]["status"]){
+                "seats" => $seats->map(function ($item) use ($trip) {
+                    $checkSeatBlock = $item->pauseSeatDetails()->where("seat_id", $item->id)->whereHas("pauseSeat", function ($seat) use ($trip) {
+                        return $seat->where("pauseTime", ">", Carbon::now())->where("trip_id", $trip->id);
+                    })->first();
+
+                    $seatBlockWaitPayment = $item->detailOrders()->whereHas("order", function ($order) use ($trip) {
+                        return $order->whereNotNull("paymentPalidityPeriod")->where("paymentPalidityPeriod", ">", Carbon::now())->where("trip_id", $trip->id);
+                    })->first();
+
+                    $seatBlockPaymented = $item->detailOrders()->whereHas("order", function ($order) use ($trip) {
+                        return $order->where("isPayment", true)->where("trip_id", $trip->id);
+                    })->first();
+
+                    $seatBlockOrder = $item->detailOrders()->where("status", 1)->whereHas("order", function ($order) use ($trip) {
+                        return $order->where("paymentMethod", "=", "OFFICE")->where("trip_id", $trip->id);
+                    })->first();
+
+                    if ($seatBlockPaymented) {
                         return array_merge(
                             $item->toArray(),
                             [
-                                "information" => Order::find($orderDetails[$indexOrderDetail]["order_id"])->customer,
-                                "status" => Order::find($orderDetails[$indexOrderDetail]["order_id"])->isPayment ? "paymented" : "wait" //wait: chờ thanh toán, paymented: đã thanh toán
+                                "information" => $seatBlockPaymented->order->customer,
+                                "status" => "paymented"
                             ]
                         );
-                    }else{
-                        $checkSeatBlock = $item->pauseSeatDetails()->where("seat_id", $item->id)->whereHas("pauseSeat", function($seat){
-                            return $seat->where("pauseTime", ">", Carbon::now());
-                        })->first();
-                        if($checkSeatBlock){
-                            return array_merge(
-                                $item->toArray(),
-                                [
-                                    "author" => $checkSeatBlock->pauseSeat->account->name,
-                                    "time" => Carbon::createFromDate($checkSeatBlock->pauseSeat->pauseTime)->valueOf() - Carbon::now()->valueOf()
-                                ]
-                            );
-                        }else{
-                            return $item;
-                        }
+                    } elseif ($seatBlockOrder) {
+                        return array_merge(
+                            $item->toArray(),
+                            [
+                                "information" => $seatBlockOrder->order->customer,
+                                "status" => "wait"
+                            ]
+                        );
+                    } elseif ($seatBlockWaitPayment) {
+                        return array_merge(
+                            $item->toArray(),
+                            [
+                                "information" => $seatBlockWaitPayment->order->customer,
+                                "time" => Carbon::createFromDate($seatBlockWaitPayment->order->paymentPalidityPeriod)->valueOf() - Carbon::now()->valueOf(),
+                                "status" => "wait_payment"
+                            ]
+                        );
+                    } elseif ($checkSeatBlock) {
+                        return array_merge(
+                            $item->toArray(),
+                            [
+                                "author" => $checkSeatBlock->pauseSeat->account->name,
+                                "time" => Carbon::createFromDate($checkSeatBlock->pauseSeat->pauseTime)->valueOf() - Carbon::now()->valueOf(),
+                                "status" => "pause"
+                            ]
+                        );
+                    } else {
+                        return $item;
                     }
                 })
             )

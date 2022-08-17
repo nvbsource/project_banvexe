@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
             $table->timestamp("pauseTime");
             $table->unsignedBigInteger("account_id");
+            $table->unsignedBigInteger("trip_id");
             $table->foreign("account_id")->references("id")->on("accounts");
+            $table->foreign("trip_id")->references("id")->on("trips");
             $table->timestamps();
         });
     }

@@ -29,6 +29,10 @@ class Trip extends Model
     {
         return $this->hasMany(AssistantDriversDetail::class);
     }
+    public function pauseSeats()
+    {
+        return $this->hasMany(PauseSeat::class);
+    }
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');

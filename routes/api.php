@@ -7,6 +7,7 @@ use App\Http\Controllers\DriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassengerCarCompanyApiController;
+use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Manager\DiscountController;
 use App\Http\Controllers\Manager\OrderController;
 use App\Http\Controllers\Manager\SeatController;
@@ -28,6 +29,15 @@ use App\Models\Order;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+
+Route::post('/login', [AuthController::class, 'login']);
+
+
+
+
 
 Route::group(["prefix" => "driver"], function () {
     Route::get('/getDriverByCompany/{company_id}', [DriverController::class, 'getDriverByCompany']);
@@ -79,3 +89,6 @@ Route::group(['prefix' => 'vehicle', 'middleware' => 'authBms'], function () {
     Route::post('/{id}/picture', [VehicleController::class, 'uploadImage']);
     Route::delete('/picture/{id}', [VehicleController::class, 'deleteImage']);
 });
+
+
+

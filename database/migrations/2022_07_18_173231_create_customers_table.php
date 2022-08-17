@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
+            $table->string('code')->nullable();
+            $table->timestamp('time_expiry')->nullable();
             $table->string('email')->unique()->nullable();
             $table->date('birthday')->nullable();
             $table->string('idCard')->nullable();

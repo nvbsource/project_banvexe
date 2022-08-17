@@ -306,9 +306,8 @@ var KTOrder = (function () {
     const checkTimeRefreshInformation = () => {
         timeOutRefresh = setTimeout(() => {
             handleGetInforTrip();
-        }, 2000);
+        }, 3000);
     };
-
     const addTimeInterval = () => {
         const times = document.querySelectorAll(".seat-time-pause");
         times.forEach((item) => {

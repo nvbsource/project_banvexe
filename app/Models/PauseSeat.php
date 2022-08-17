@@ -10,7 +10,8 @@ class PauseSeat extends Model
     use HasFactory;
     protected $fillable = [
         "pauseTime",
-        "account_id"
+        "account_id",
+        "trip_id"
     ];
     public function pauseSeatDetails()
     {
@@ -19,5 +20,9 @@ class PauseSeat extends Model
     public function account()
     {
         return $this->belongsTo(Account::class, "account_id", "id");
+    }
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class, "trip_id", "id");
     }
 }

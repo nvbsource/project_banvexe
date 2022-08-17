@@ -8,15 +8,18 @@
         "php": "^8.0.2",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
+        "infobip/infobip-api-php-client": "3.2.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
+        "pnlinh/laravel-infobip-sms": "^1.0",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
         "symfony/postmark-mailer": "^6.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.7",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",

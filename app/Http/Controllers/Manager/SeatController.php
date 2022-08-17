@@ -37,17 +37,24 @@ class SeatController extends Controller
             ], 422);
         }
 
-        
-        $pauseSeatByAccount = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function ($pauseSeat) {
-            return $pauseSeat->where("pauseTime", ">", Carbon::now())->where("account_id", "!=", Auth::guard("bms")->user()->id);
+        $seatsBlockCheckTime = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function ($pauseSeat) use ($trip) {
+            return $pauseSeat->where("pauseTime", ">", Carbon::now())->where("trip_id", $trip->id)->where("account_id", "!=", Auth::guard("bms")->user()->id);
         })->get();
 
-        $seatPaymented = DetailOrder::whereIn("seat_id", $arraySeat)->whereHas("order", function ($item) use ($trip){
-            return $item->where("trip_id", $trip->id)->where("isPayment", true)->orWhereHas("detailsOrders", function($detailOrder){
-                return $detailOrder->where("status", true);
+
+        $seatBlockCheckPayment = DetailOrder::whereIn("seat_id", $arraySeat)->whereHas("order", function ($item) use ($trip) {
+            return $item->where(function($query){
+                $query->whereNotNull("paymentPalidityPeriod")->where("paymentPalidityPeriod", ">", Carbon::now());
+            })->orWhere(function($query){
+                $query->whereNotNull("paymentPalidityPeriod")->where("isPayment", true);
+            })->orWhereHas("detailsOrders", function($query){
+                return $query->where("status", true)->where("paymentMethod", "=", "OFFICE");
             });
+        })->whereHas("order",function($query) use ($trip){
+            return $query->where("trip_id", $trip->id);
         })->get();
-        $collectionSeatMerge = $pauseSeatByAccount->merge($seatPaymented)->sortBy("seat_id");
+
+        $collectionSeatMerge = $seatsBlockCheckTime->merge($seatBlockCheckPayment)->sortBy("seat_id");
         $arraySeatError = $collectionSeatMerge->map(function ($seat_detail) {
             return $seat_detail->seat->name;
         });
@@ -57,20 +64,21 @@ class SeatController extends Controller
             ], 422);
         }
 
-        $pauseSeatsDetail = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function ($pauseSeat) {
-            return $pauseSeat->where("pauseTime", ">", Carbon::now());
+        $pauseSeatsDetail = PauseDetailSeat::whereIn("seat_id", $arraySeat)->whereHas("pauseSeat", function ($pauseSeat) use ($trip) {
+            return $pauseSeat->where("pauseTime", ">", Carbon::now())->where("trip_id", $trip->id);
         });
-        
+
         $unblockedSeats = $seatsFindArray->whereNotIn("id", $pauseSeatsDetail->pluck("seat_id")->toArray());
-        
+
         $pauseSeatNew = PauseSeat::create([
             "account_id" => Auth::guard("bms")->user()->id,
+            "trip_id" => $trip->id,
             "pauseTime" => Carbon::now()->addMinute(5)
         ]);
 
         $pauseSeatsDetail->update(["pause_seat_id" => $pauseSeatNew->id]);
 
-        if($unblockedSeats->count() > 0){
+        if ($unblockedSeats->count() > 0) {
             PauseDetailSeat::insert($unblockedSeats->map(function ($item) use ($pauseSeatNew) {
                 return array(
                     "seat_id" => $item->id,
