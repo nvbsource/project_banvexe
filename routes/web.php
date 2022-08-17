@@ -16,6 +16,4 @@ Route::post("/payment/momo/ipn", [OrderController::class, "ipnMomo"]);
 
 Route::get("/", [HomeController::class, "index"])->name("home");
 Route::get("/payment-result", [PaymentController::class, "result"])->name("paymentResult");
-
-
-
+Route::get("/chuyen-xe", [HomeController::class, "trip"])->name("trip");
