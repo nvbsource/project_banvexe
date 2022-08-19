@@ -196,3 +196,6 @@
     color: white !important;
     border-color: white !important;
 }
+#qr-video{
+    width: 100%;
+}

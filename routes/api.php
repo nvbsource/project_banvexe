@@ -34,7 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/login', [AuthController::class, 'login']);
-
+Route::post('/check-verification', [AuthController::class, 'checkVerificationCode']);
+Route::post('/send-new-code', [AuthController::class, 'sendNewCode']);
 
 
 

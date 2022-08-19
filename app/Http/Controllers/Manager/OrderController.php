@@ -113,6 +113,7 @@ class OrderController extends Controller
     {
         $vnp_ResponseCode = $request->input("vnp_ResponseCode");
         $vnp_SecureHash = $request->input("vnp_SecureHash");
+        $orderId = $request->input('vnp_TxnRef');
         $inputData = array();
         foreach ($_GET as $key => $value) {
             if (substr($key, 0, 4) == "vnp_") {
@@ -137,6 +138,21 @@ class OrderController extends Controller
 
         if ($secureHash === $vnp_SecureHash) {
             if ($vnp_ResponseCode === "00") {
+                $order = Order::where("orderCode", $orderId)->first();
+                $order["time"] = Carbon::create($order->trip->start_date)->format("H:i"). " ngày ". Carbon::create($order->trip->start_date)->format("d/m/Y");
+                $seats = implode(", ", $order->detailsOrders()->where("status", true)->get()->map(function($item){
+                    return $item->seat->name;
+                })->toArray());
+                $driversPhone = implode(", ", $order->trip->drivers()->get()->map(function($item){
+                    return $item->driver->phone;
+                })->toArray());
+                $driversAssitantPhone = implode(", ", $order->trip->assitantDrivers()->get()->map(function($item){
+                    return $item->assistantDriver->phone;
+                })->toArray());
+                Mail::send('email.paymentResult', ["order" => $order, "seats" => $seats, "driversAssitantPhone" => $driversAssitantPhone, "driversPhone" => $driversPhone], function ($message) use ($order) {
+                    $message->to($order->customer->email);
+                    $message->subject('Thông tin mã đơn hàng [' . $order->orderCode . ']');
+                });
                 return "Thanh toán thành công";
             } else {
                 return "Thanh toán thất bại";
@@ -186,8 +202,8 @@ class OrderController extends Controller
 
     public function callbackMomo(Request $request)
     {
-        $accessKey = 'eQAm6r5KrIE7Zrhr';
-        $secretKey = 'NYJq8cfB2uNGiMRLq9qMSsEPGhUarrti';
+        $accessKey = env("MOMO_ACCESS_KEY");
+        $secretKey = env("MOMO_SECRET_KEY");
         $partnerCode = $_GET["partnerCode"];
         $orderId = $_GET["orderId"];
         $requestId = $_GET["requestId"];
@@ -211,7 +227,9 @@ class OrderController extends Controller
 
         if ($m2signature == $partnerSignature) {
             if ($resultCode == '0') {
-                return '<div class="alert alert-success"><strong>Payment status: </strong>Success</div>';
+                $order = Order::where("orderCode", $requestId)->first();
+                $order["time"] = Carbon::create($order->trip->start_date)->format("H:i"). " ngày ". Carbon::create($order->trip->start_date)->format("d/m/Y");
+                return redirect()->route("client.paymentResult", ["code" => $order->orderCode]);
             } else {
                 return redirect()->route("paymentResult", ["code" => $requestId]);
             }
@@ -289,23 +307,24 @@ class OrderController extends Controller
         die(json_encode($returnData));
     }
     
-    public function ipnMomo()
+    public function ipnMomo(Request $request)
     {
-        $accessKey = 'eQAm6r5KrIE7Zrhr';
-        $secretKey = 'NYJq8cfB2uNGiMRLq9qMSsEPGhUarrti';
-        $partnerCode = $_POST["partnerCode"];
-        $orderId = $_POST["orderId"];
-        $requestId = $_POST["requestId"];
-        $amount = $_POST["amount"];
-        $orderInfo = $_POST["orderInfo"];
-        $orderType = $_POST["orderType"];
-        $transId = $_POST["transId"];
-        $resultCode = $_POST["resultCode"];
-        $message = $_POST["message"];
-        $payType = $_POST["payType"];
-        $responseTime = $_POST["responseTime"];
-        $extraData = $_POST["extraData"];
-        $m2signature = $_POST["signature"]; //MoMo signature
+        $data = $request->all();
+        $accessKey = env("MOMO_ACCESS_KEY");
+        $secretKey = env("MOMO_SECRET_KEY");
+        $partnerCode = $data["partnerCode"];
+        $orderId = $data["orderId"];
+        $requestId = $data["requestId"];
+        $amount = $data["amount"];
+        $orderInfo = $data["orderInfo"];
+        $orderType = $data["orderType"];
+        $transId = $data["transId"];
+        $resultCode = $data["resultCode"];
+        $message = $data["message"];
+        $payType = $data["payType"];
+        $responseTime = $data["responseTime"];
+        $extraData = $data["extraData"];
+        $m2signature = $data["signature"]; //MoMo signature
 
         //Checksum
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&message=" . $message . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo .
@@ -318,6 +337,20 @@ class OrderController extends Controller
                 $order = Order::where("orderCode", $requestId)->first();
                 $order->isPayment = true;
                 $order->save();
+                $order["time"] = Carbon::create($order->trip->start_date)->format("H:i"). " ngày ". Carbon::create($order->trip->start_date)->format("d/m/Y");
+                $seats = implode(", ", $order->detailsOrders()->where("status", true)->get()->map(function($item){
+                    return $item->seat->name;
+                })->toArray());
+                $driversPhone = implode(", ", $order->trip->drivers()->get()->map(function($item){
+                    return $item->driver->phone;
+                })->toArray());
+                $driversAssitantPhone = implode(", ", $order->trip->assitantDrivers()->get()->map(function($item){
+                    return $item->assistantDriver->phone;
+                })->toArray());
+                Mail::send('email.paymentResult', ["order" => $order, "seats" => $seats, "driversAssitantPhone" => $driversAssitantPhone, "driversPhone" => $driversPhone], function ($message) use ($order) {
+                    $message->to($order->customer->email);
+                    $message->subject('Thông tin mã đơn hàng [' . $order->orderCode . ']');
+                });
             }
         }
     }
@@ -384,6 +417,7 @@ class OrderController extends Controller
         }
 
         $price = count($seatsBook) * $trip->price;
+        
         $order = Order::create([
             "orderCode" => $this->generateRandomString(),
             "trip_id" => $trip->id,
@@ -392,7 +426,6 @@ class OrderController extends Controller
             "paymentMethod" => strtoupper($methodPayment),
             "isTicketReceived" => filter_var($receivedTicket, FILTER_VALIDATE_BOOLEAN),
         ]);
-
         $orderDetails = DetailOrder::insert(array_map(function ($seat) use ($order) {
             return array(
                 "seat_id" => $seat,
@@ -431,9 +464,15 @@ class OrderController extends Controller
                 $urlPayment = "";
                 break;
         }
-
+        
         if ($sendEmail) {
-            Mail::send('email.paymentVNpay', ['url' => $urlPayment], function ($message) use ($email, $order) {
+            $path = 'images/qrcode/'. $order->orderCode.'.png';
+            \QrCode::size(350)->format('png')->generate($order->orderCode, public_path($path));
+            $order["time"] = Carbon::create($order->trip->start_date)->format("H:i"). " ngày ". Carbon::create($order->trip->start_date)->format("d/m/Y");
+            $seats = implode(", ", $order->detailsOrders()->where("status", true)->get()->map(function($item){
+                return $item->seat->name;
+            })->toArray());
+            Mail::send('email.requiredPayment', ['url' => $urlPayment, "order" => $order, "seats" => $seats], function ($message) use ($email, $order) {
                 $message->to($email);
                 $message->subject('Thanh toán mã đơn hàng [' . $order->orderCode . ']');
             });
@@ -441,11 +480,20 @@ class OrderController extends Controller
 
         // Send order phone to customer
         if ($sendPhone) {
+            $timeStart = Carbon::create($order->trip->start_date)->format("H:i"). " ". Carbon::create($order->trip->start_date)->format("d/m/Y");
+            $routeArea = $order->trip->route->departureDistrict->name . ' - ' . $order->trip->route->destinationDistrict->name;
+            $company = $order->trip->passengerCarCompany->name;
+            $timeExpiry = Carbon::create($order->paymentPalidityPeriod)->format("H:i d/m/Y");
+            $msg = 'Vui lòng TT mã '.$order->orderCode.' bằng ví '.$order->paymentMethod.', '.$routeArea.' '.$timeStart.', xe '. $company.' - '. number_format($order->price).'đ'.' trước '. $timeExpiry;
+            $this->sendSms($phone, $msg);
         }
 
 
         return response()->json([
             "message" => "Tạo đơn hàng thành công"
         ]);
+    }
+    public function scanQR(){
+        return view("bms.manager.pages.order.scan");
     }
 }

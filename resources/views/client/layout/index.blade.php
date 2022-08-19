@@ -21,15 +21,15 @@
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="{{ asset('/css/antd.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/css/plugins/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/plugins/antd.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}" />
 </head>
 
 <body>
     @include('client.layout.header')
     @yield('content')
-    <div class="modal fade" id="modal-login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        <div class="modal fade" id="modal-login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
         data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -55,7 +55,7 @@
                             </div>
                             <div id="recaptcha-container"></div>
                         </div>
-                        <button class="form-login-button">Tiếp tục</button>
+                        <button class="form-login-button" id="button_login">Tiếp tục</button>
                         <div class="form-login-line">
                             <span class="text-center d-block">Hoặc</span>
                         </div>
@@ -91,8 +91,11 @@
                             </div>
                             <div id="recaptcha-container"></div>
                         </div>
-                        <a href="#" class="text-primary">Gửi lại mã xác thực</a>
-                        <button class="form-login-button">Tiếp tục</button>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="text-primary form-verification-resend" disabled>Gửi lại mã xác thực</button>
+                            <span id="minutes"></span>
+                        </div>
+                        <button class="form-login-button" id="button_verification">Tiếp tục</button>
                     </form>
                 </div>
             </div>
@@ -109,6 +112,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://formvalidation.io/vendors/formvalidation/dist/js/plugins/Bootstrap.min.js"></script>
 
+    <script src="{{ asset('js/plugins/toastr.min.js') }}"></script>
     <script src="{{ asset('js/common/common.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('scripts')

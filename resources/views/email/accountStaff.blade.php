@@ -89,7 +89,7 @@
                   </table>
                   <hr>
                   <div style="text-align:center;margin-top:10px">
-                    <a href="https://localhost:8000/admin/login" style="margin:5px;border:2px solid #ff9900;border-radius:5px;font-weight:bold;font-size:1.2em;background-color:#ffdd00;color:#000;padding:8px 16px;display:inline-block;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;white-space:nowrap" target="_blank">Truy cập trang quản trị</a>
+                    <a href="{{route('adminLogin')}}" style="margin:5px;border:2px solid #ff9900;border-radius:5px;font-weight:bold;font-size:1.2em;background-color:#ffdd00;color:#000;padding:8px 16px;display:inline-block;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;white-space:nowrap" target="_blank">Truy cập trang quản trị</a>
                   </div>
                 </div>
               </div>

@@ -39,5 +39,6 @@ Route::group(['middleware' => ['authBms', 'accountAccess:manager'], "as" => "man
 
     Route::group(['prefix' => 'order'], function () {
         Route::get('/booking', [OrderController::class, 'viewBooking'])->name("bookingTicket");
+        Route::get('/scan-qr', [OrderController::class, 'scanQR'])->name("scanQR");
     });
 });

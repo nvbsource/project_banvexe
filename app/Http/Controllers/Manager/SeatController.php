@@ -42,7 +42,7 @@ class SeatController extends Controller
         })->get();
 
 
-        $seatBlockCheckPayment = DetailOrder::whereIn("seat_id", $arraySeat)->whereHas("order", function ($item) use ($trip) {
+        $seatBlockCheckPayment = DetailOrder::whereIn("seat_id", $arraySeat)->whereHas("order", function ($item) {
             return $item->where(function($query){
                 $query->whereNotNull("paymentPalidityPeriod")->where("paymentPalidityPeriod", ">", Carbon::now());
             })->orWhere(function($query){

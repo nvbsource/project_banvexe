@@ -39,8 +39,10 @@ class RedirectIfAuthenticated
                     case "admin":
                         return redirect(RouteServiceProvider::ADMIN_HOME);
                         break;
+                    case "client":
+                        return redirect(RouteServiceProvider::HOME);
+                        break;
                 }
-                return redirect(RouteServiceProvider::HOME);
             }
         }
 

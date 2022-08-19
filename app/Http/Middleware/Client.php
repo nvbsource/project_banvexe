@@ -21,7 +21,7 @@ class Client
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->route('home');
+                return redirect()->route('client.home');
             }
         }
         return $next($request);

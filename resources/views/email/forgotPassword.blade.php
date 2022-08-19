@@ -46,7 +46,7 @@
               <div style="background-color:#fff;padding-bottom:15px">
                 <div style="padding-left:15px;padding-right:15px">
                   <div style="text-align:center;margin-top:10px">
-                    <a href="http://localhost:8000/admin/reset-password/{{$token}}" style="margin:5px;border:2px solid #ff9900;border-radius:5px;font-weight:bold;font-size:1.2em;background-color:#ffdd00;color:#000;padding:8px 16px;display:inline-block;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;white-space:nowrap" target="_blank">Thay đổi mật khẩu</a>
+                    <a href="{{route('adminResetPassword', $token)}}" style="margin:5px;border:2px solid #ff9900;border-radius:5px;font-weight:bold;font-size:1.2em;background-color:#ffdd00;color:#000;padding:8px 16px;display:inline-block;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;white-space:nowrap" target="_blank">Thay đổi mật khẩu</a>
                   </div>
                 </div>
               </div>
